@@ -43,6 +43,7 @@ export default function Footer() {
                             { name: "HR Services", href: "/hr" },
                             { name: "Logistics", href: "/logistics" },
                             { name: "Real Estate", href: "/real-estate" },
+                            { name: "Terms of Service", href: "/terms" },
                             { name: "Contact", href: "/contact" },
                         ].map((link) => (
                             <Link

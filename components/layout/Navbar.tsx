@@ -41,6 +41,7 @@ const navLinks = [
     },
     { name: "Latest Updates", href: "/#updates" },
     { name: "Advertise", href: "/advertise" },
+    { name: "Terms of Service", href: "/terms" },
     { name: "Contact", href: "/contact" },
 ];
 
