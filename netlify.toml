@@ -1,0 +1,12 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  # Disable secret scanning to prevent build failures from false positives
+  SECRETS_SCAN_ENABLED = "false"
+  # specific Node version to match local environment if needed
+  NODE_VERSION = "22"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"

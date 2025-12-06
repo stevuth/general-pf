@@ -9,8 +9,13 @@ export async function POST(request: Request) {
         const { username, password } = body;
 
         // Get credentials from environment variables
-        const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'admin';
-        const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
+        const ADMIN_USERNAME = process.env.ADMIN_USERNAME;
+        const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
+
+        if (!ADMIN_USERNAME || !ADMIN_PASSWORD) {
+            console.error("Admin credentials not configured");
+            return NextResponse.json({ success: false, message: "Server configuration error" }, { status: 500 });
+        }
 
         // Check username first
         if (username !== ADMIN_USERNAME) {

@@ -20,8 +20,12 @@ export async function POST(request: Request) {
         const { currentPassword, newPassword } = body;
 
         // Get credentials from environment variables
-        const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'admin';
-        const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
+        const ADMIN_USERNAME = process.env.ADMIN_USERNAME;
+        const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
+
+        if (!ADMIN_USERNAME || !ADMIN_PASSWORD) {
+            return NextResponse.json({ success: false, message: "Server configuration error" }, { status: 500 });
+        }
 
         const client = await clientPromise;
         const db = client.db("general_pf");
