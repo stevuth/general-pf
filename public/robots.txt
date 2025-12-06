@@ -1,0 +1,43 @@
+# General PF Global Resources - robots.txt
+# Optimized for SEO and security
+
+# Allow all search engine crawlers
+User-agent: *
+Allow: /
+Allow: /hr
+Allow: /logistics
+Allow: /real-estate
+Allow: /about
+Allow: /contact
+Allow: /advertise
+
+# Block admin and API routes from indexing
+Disallow: /admin
+Disallow: /admin/*
+Disallow: /api
+Disallow: /api/*
+Disallow: /login
+Disallow: /login/*
+
+# Block private files
+Disallow: /*.json$
+Disallow: /_next/
+Disallow: /node_modules/
+
+# Sitemap location
+Sitemap: https://www.generalpf.com/sitemap.xml
+
+# Crawl-delay for responsible crawling
+Crawl-delay: 1
+
+# Google specific rules
+User-agent: Googlebot
+Allow: /
+Disallow: /admin
+Disallow: /api
+
+# Bing specific rules
+User-agent: Bingbot
+Allow: /
+Disallow: /admin
+Disallow: /api
