@@ -86,7 +86,7 @@ export default function GuarantorForm({ jobTitle, jobId }: GuarantorFormProps) {
                     </div>
                     <div>
                         <strong className="text-gray-700 block">Phone:</strong>
-                        <span className="text-gray-900">08038870294, 08120065303</span>
+                        <span className="text-gray-900">08120065303</span>
                     </div>
                 </div>
                 <p className="text-center text-blue-600 italic mt-4 font-medium">"Connecting the globe with solutions"</p>
@@ -120,7 +120,7 @@ export default function GuarantorForm({ jobTitle, jobId }: GuarantorFormProps) {
                                 type="email"
                                 name="email"
                                 required
-                                placeholder="john@example.com"
+                                placeholder="your.email@example.com"
                                 className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
                             />
                         </div>

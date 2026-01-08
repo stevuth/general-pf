@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { Users, Truck, Building2, LayoutDashboard, MessageSquare, Briefcase, Home, LogOut, PlusCircle, Key, Megaphone } from 'lucide-react';
+import { Users, Truck, Building2, LayoutDashboard, MessageSquare, Briefcase, Home, LogOut, PlusCircle, Key, Megaphone, Wrench, ShoppingBag } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
 import ConfirmationModal from '@/components/ui/ConfirmationModal';
@@ -13,6 +13,7 @@ const submissionLinks = [
     { href: "/admin/logistics", label: "Logistics Requests", icon: Truck },
     { href: "/admin/real-estate", label: "Real Estate Requests", icon: Building2 },
     { href: "/admin/advertisements", label: "Advertisements", icon: Megaphone },
+    { href: "/admin/artisans", label: "Artisan Requests", icon: Wrench },
     { href: "/admin/feedback", label: "Feedback", icon: MessageSquare },
     { href: "/admin/change-password", label: "Change Password", icon: Key },
 ];
@@ -21,6 +22,8 @@ const managementLinks = [
     { href: "/admin/jobs", label: "Post Jobs", icon: Briefcase },
     { href: "/admin/properties", label: "Post Properties", icon: Home },
     { href: "/admin/trainings", label: "Post Trainings", icon: Users },
+    { href: "/admin/shop", label: "Manage Shop", icon: ShoppingBag },
+    { href: "/admin/announcements", label: "Announcements", icon: Megaphone },
 ];
 
 export default function AdminNavbar() {

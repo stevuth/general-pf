@@ -4,6 +4,7 @@ import About from "@/components/sections/About";
 import SecondaryServices from "@/components/sections/SecondaryServices";
 import LatestUpdates from "@/components/sections/LatestUpdates";
 import AdvertiseSection from "@/components/sections/AdvertiseSection";
+import ServiceAdvertCards from "@/components/sections/ServiceAdvertCards";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 
@@ -14,6 +15,7 @@ export default function Home() {
       <Hero />
       <About />
       <Services />
+      <ServiceAdvertCards />
       <LatestUpdates />
       <AdvertiseSection />
       <SecondaryServices />

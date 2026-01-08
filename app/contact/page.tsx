@@ -93,7 +93,7 @@ export default function Contact() {
                     <div className="mt-16 text-center">
                         <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Need immediate assistance?</h2>
                         <Button size="lg" className="bg-[#25D366] hover:bg-[#20BA5A] text-white px-8 h-14 rounded-full text-lg shadow-lg hover:shadow-xl transition-all" asChild>
-                            <a href="https://wa.me/2348120065303" target="_blank" rel="noopener noreferrer">
+                            <a href="https://wa.me/2349059456831" target="_blank" rel="noopener noreferrer">
                                 Chat on WhatsApp
                             </a>
                         </Button>

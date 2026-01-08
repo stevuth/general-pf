@@ -125,7 +125,7 @@ export default function PropertyCard({ property, index }: PropertyCardProps) {
 
                 <div className="flex items-center justify-between border-t border-gray-100 dark:border-white/10 pt-4 mt-auto gap-3">
                     <a
-                        href={`https://wa.me/2348120065303?text=${encodeURIComponent(`Hi, I am interested in the ${property.propertyType} located at ${property.location}. Is it still available?`)}`}
+                        href={`https://wa.me/2349059456831?text=${encodeURIComponent(`Hi, I am interested in the ${property.propertyType} located at ${property.location}. Is it still available?`)}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex-1 inline-flex items-center justify-center px-4 py-2 bg-blue-600 text-white text-sm font-bold rounded-lg hover:bg-blue-700 transition-colors gap-2"

@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ChevronDown, Building2, Truck, Users, Home } from "lucide-react";
+import { Menu, X, ChevronDown, Building2, Truck, Users, Home, Wrench, ShoppingBag } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
@@ -39,6 +39,16 @@ const navLinks = [
             { name: "List My Property", href: "/real-estate/list-property" },
         ],
     },
+    {
+        name: "Artisans",
+        href: "/artisans",
+        icon: Wrench,
+    },
+    {
+        name: "Shop",
+        href: "/shop",
+        icon: ShoppingBag,
+    },
     { name: "Latest Updates", href: "/#updates" },
     { name: "Advertise", href: "/advertise" },
     { name: "Terms of Service", href: "/terms" },
@@ -49,7 +59,23 @@ export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
+    const [hasAnnouncement, setHasAnnouncement] = useState(false);
     const pathname = usePathname();
+
+    useEffect(() => {
+        const checkAnnouncements = async () => {
+            try {
+                const response = await fetch('/api/announcements');
+                const data = await response.json();
+                if (data.success && data.announcements.length > 0) {
+                    setHasAnnouncement(true);
+                }
+            } catch (error) {
+                console.error("Error fetching announcements:", error);
+            }
+        };
+        checkAnnouncements();
+    }, []);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -83,10 +109,13 @@ export default function Navbar() {
     return (
         <nav
             className={cn(
-                "fixed top-0 w-full z-50 transition-all duration-300 border-b border-transparent",
+                "fixed w-full z-50 transition-all duration-300 border-b border-transparent",
                 scrolled
-                    ? "bg-white/90 backdrop-blur-md shadow-sm border-gray-100 py-2"
-                    : "bg-transparent py-4"
+                    ? "top-0 bg-white/90 backdrop-blur-md shadow-sm border-gray-100 py-2"
+                    : cn(
+                        "bg-transparent py-4",
+                        hasAnnouncement ? "top-10" : "top-0"
+                    )
             )}
         >
             <div className="w-full px-2 md:px-6">

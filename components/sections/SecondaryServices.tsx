@@ -94,7 +94,7 @@ export default function SecondaryServices() {
                     </p>
 
                     <a
-                      href={`https://wa.me/2348120065303?text=Hi, I am interested in your ${service.title} service.`}
+                      href={`https://wa.me/2349059456831?text=Hi, I am interested in your ${service.title} service.`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 px-5 py-2.5 mt-6 rounded-full bg-white/5 hover:bg-secondary border border-white/10 hover:border-secondary text-white text-sm font-semibold transition-all duration-300 group-hover:shadow-lg"

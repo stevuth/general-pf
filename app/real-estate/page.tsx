@@ -58,7 +58,7 @@ export default function RealEstate() {
         fetchProperties();
     }, []);
 
-    const whatsappNumber = "2348120065303";
+    const whatsappNumber = "2349059456831";
 
     return (
         <>

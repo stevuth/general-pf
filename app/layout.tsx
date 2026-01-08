@@ -108,6 +108,7 @@ export const metadata: Metadata = {
 
 import BackButton from "@/components/ui/BackButton";
 import SmoothScroll from "@/components/SmoothScroll";
+import AnnouncementBar from "@/components/layout/AnnouncementBar";
 
 // JSON-LD Structured Data
 const jsonLd = {
@@ -211,6 +212,7 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased font-sans">
+        <AnnouncementBar />
         <SmoothScroll />
         <BackButton />
         {children}

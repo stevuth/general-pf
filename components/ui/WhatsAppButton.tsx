@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 export default function WhatsAppButton() {
     const [isExpanded, setIsExpanded] = useState(false);
     const [showPrompt, setShowPrompt] = useState(true);
-    const whatsappNumber = "2348120065303"; // +234 812 006 5303
+    const whatsappNumber = "2349059456831"; // +234 905 945 6831
     const whatsappUrl = `https://wa.me/${whatsappNumber}`;
 
     // Hide prompt when chat is expanded
@@ -75,7 +75,7 @@ export default function WhatsAppButton() {
                                     Start Chat
                                 </a>
                                 <p className="text-gray-500 text-xs text-center mt-3">
-                                    +234 812 006 5303
+                                    +234 905 945 6831
                                 </p>
                             </div>
                             <div className="h-1 bg-gradient-to-r from-primary via-secondary to-primary opacity-50" />

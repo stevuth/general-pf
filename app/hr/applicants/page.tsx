@@ -5,15 +5,20 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { MapPin, Briefcase, DollarSign, FileText, Clock } from "lucide-react";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import GuarantorForm from "@/components/forms/GuarantorForm";
 import FeedbackSection from "@/components/sections/FeedbackSection";
 
-const WHATSAPP_NUMBER = "2348120065303";
+const WHATSAPP_NUMBER = "2349059456831";
 
-export default function JobApplicants() {
-    const [activeTab, setActiveTab] = useState<'jobs' | 'form'>('jobs');
+function JobApplicantsContent() {
+    const searchParams = useSearchParams();
+    const tabParam = searchParams.get('tab');
+    const [activeTab, setActiveTab] = useState<'jobs' | 'form'>(tabParam === 'form' ? 'form' : 'jobs');
     const [jobs, setJobs] = useState<any[]>([]);
     const [isLoadingJobs, setIsLoadingJobs] = useState(true);
+    const [selectedJobTitle, setSelectedJobTitle] = useState<string>("");
 
     useEffect(() => {
         const fetchJobs = async () => {
@@ -46,9 +51,10 @@ export default function JobApplicants() {
     };
 
     const handleApplyNow = (jobTitle: string) => {
-        const message = `Hello! I'm interested in applying for the ${jobTitle} position.`;
-        const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-        window.open(whatsappUrl, '_blank');
+        setSelectedJobTitle(jobTitle);
+        setActiveTab('form');
+        // Scroll to top of the form area
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     return (
@@ -177,12 +183,20 @@ export default function JobApplicants() {
                             transition={{ duration: 0.3 }}
                             className="max-w-4xl mx-auto"
                         >
-                            <GuarantorForm />
+                            <GuarantorForm jobTitle={selectedJobTitle} />
                         </motion.div>
                     )}
                 </div>
             </div>
             <FeedbackSection />
         </>
+    );
+}
+
+export default function JobApplicants() {
+    return (
+        <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+            <JobApplicantsContent />
+        </Suspense>
     );
 }

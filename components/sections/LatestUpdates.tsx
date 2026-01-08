@@ -176,15 +176,13 @@ export default function LatestUpdates() {
                                                     </div>
                                                 </div>
 
-                                                <a
-                                                    href={`https://wa.me/2348120065303?text=Hello, I'm interested in applying for the ${encodeURIComponent(job.title)} position at ${encodeURIComponent(job.company)}.`}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
+                                                <Link
+                                                    href="/hr/applicants?tab=form"
                                                     className="inline-flex items-center text-primary font-bold text-sm uppercase tracking-wider group-hover:text-secondary transition-colors"
                                                 >
                                                     Apply Now
                                                     <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                                                </a>
+                                                </Link>
                                             </div>
                                         </motion.div>
                                     ))

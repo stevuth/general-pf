@@ -29,7 +29,7 @@ export default function BackButton() {
     return (
         <button
             onClick={() => router.back()}
-            className={`fixed top-4 left-4 z-50 text-gray-700 hover:text-primary transition-all duration-300 group cursor-pointer ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4 pointer-events-none"
+            className={`fixed top-14 left-4 z-50 text-gray-700 hover:text-primary transition-all duration-300 group cursor-pointer ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4 pointer-events-none"
                 }`}
             title="Go Back"
         >

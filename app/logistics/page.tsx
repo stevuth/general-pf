@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Truck, Package, Clock, ShieldCheck, MapPin, Phone, Mail, ArrowRight, CheckCircle } from "lucide-react";
+import { Truck, Package, Clock, ShieldCheck, MapPin, Phone, Mail, ArrowRight, CheckCircle, Plane } from "lucide-react";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
 
 export default function Logistics() {
@@ -27,9 +27,9 @@ export default function Logistics() {
             color: "blue"
         },
         {
-            icon: Truck,
-            title: "Nationwide Coverage",
-            desc: "We deliver to all 36 states in Nigeria with reliable and efficient service.",
+            icon: Plane,
+            title: "Worldwide Coverage",
+            desc: "We deliver domestically and internationally with reliable and efficient service.",
             color: "blue"
         }
     ];
@@ -58,16 +58,17 @@ export default function Logistics() {
                                 <div className="inline-block bg-white/20 backdrop-blur-sm px-6 py-2 rounded-full mb-4">
                                     <span className="text-sm font-semibold flex items-center gap-2">
                                         <Truck className="w-4 h-4" />
-                                        Professional Logistics Services
+                                        <Plane className="w-4 h-4" />
+                                        Professional Packaging & Logistics Services
                                     </span>
                                 </div>
                                 <h1 className="text-4xl md:text-6xl font-bold mb-4 leading-tight">
-                                    Reliable Logistics
+                                    Packaging & Logistics
                                     <br />
-                                    <span className="text-blue-100">Across Nigeria</span>
+                                    <span className="text-blue-100">Across the World</span>
                                 </h1>
                                 <p className="text-lg md:text-xl text-blue-50 mb-6 max-w-3xl leading-relaxed">
-                                    From small parcels to heavy cargo, we ensure your goods move safely and swiftly to their destination. Experience seamless waybill services with General PF.
+                                    From small parcels to heavy cargo, we ensure your goods move safely and swiftly to their destination worldwide. Experience seamless packaging and logistics services with General PF.
                                 </p>
                                 <div className="flex flex-col sm:flex-row gap-4">
                                     <Button size="lg" className="bg-white text-blue-700 hover:bg-blue-50 px-8 py-6" asChild>
@@ -169,7 +170,10 @@ export default function Logistics() {
                                 <div className="aspect-square rounded-3xl bg-gradient-to-br from-blue-400 to-blue-600 p-1 shadow-2xl">
                                     <div className="w-full h-full rounded-3xl bg-white dark:bg-gray-900 p-8 flex items-center justify-center">
                                         <div className="text-center">
-                                            <Truck className="w-28 h-28 text-blue-600 dark:text-blue-500 mx-auto mb-4" />
+                                            <div className="flex items-center justify-center gap-4 mb-4">
+                                                <Truck className="w-24 h-24 text-blue-600 dark:text-blue-500" />
+                                                <Plane className="w-24 h-24 text-blue-600 dark:text-blue-500" />
+                                            </div>
                                             <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
                                                 Fast & Secure
                                             </h3>
