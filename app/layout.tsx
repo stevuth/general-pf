@@ -109,6 +109,7 @@ export const metadata: Metadata = {
 import BackButton from "@/components/ui/BackButton";
 import SmoothScroll from "@/components/SmoothScroll";
 import AnnouncementBar from "@/components/layout/AnnouncementBar";
+import AdsterraAd from "@/components/ads/AdsterraAd";
 
 // JSON-LD Structured Data
 const jsonLd = {
@@ -216,6 +217,7 @@ export default function RootLayout({
         <SmoothScroll />
         <BackButton />
         {children}
+        <AdsterraAd />
       </body>
     </html>
   );
