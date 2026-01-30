@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Users, Truck, Building2, ArrowRight } from 'lucide-react';
+import { Users, Truck, Building2, ArrowRight, Megaphone } from 'lucide-react';
 
 export default function AdminDashboard() {
     return (
@@ -54,6 +54,25 @@ export default function AdminDashboard() {
                         </div>
                         <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Property Listings</h3>
                         <p className="text-sm text-gray-500 mt-1 mb-4">Manage real estate listings and requests</p>
+                        <div className="flex items-center text-[#D4AF37] font-medium text-sm group-hover:gap-2 transition-all">
+                            <span>View Details</span>
+                            <ArrowRight className="w-4 h-4 ml-1" />
+                        </div>
+                    </div>
+                </Link>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+                {/* Advertisements Card */}
+                <Link href="/admin/advertisements" className="group bg-white dark:bg-surface-dark p-6 rounded-xl shadow-sm border border-gray-100 dark:border-white/10 hover:shadow-md transition-all duration-300 relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-purple-50 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110" />
+
+                    <div className="relative z-10">
+                        <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4 text-purple-700">
+                            <Megaphone className="w-6 h-6" />
+                        </div>
+                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Advertisements</h3>
+                        <p className="text-sm text-gray-500 mt-1 mb-4">View requests and manage access codes</p>
                         <div className="flex items-center text-[#D4AF37] font-medium text-sm group-hover:gap-2 transition-all">
                             <span>View Details</span>
                             <ArrowRight className="w-4 h-4 ml-1" />

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Briefcase, MapPin, Clock, DollarSign, Upload, CheckCircle } from "lucide-react";
+import { Briefcase, MapPin, Clock, DollarSign, Upload, CheckCircle, Phone } from "lucide-react";
 
 export default function JobSeekersPage() {
     const [jobs, setJobs] = useState<any[]>([]);
@@ -352,13 +352,41 @@ export default function JobSeekersPage() {
                                                 {getTimeAgo(job.createdAt)}
                                             </span>
                                         </div>
+                                        <div className="mt-3 flex items-center gap-2">
+                                            <span className={`px-2 py-0.5 rounded text-xs font-semibold ${job.posterType === 'Agent' ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700'}`}>
+                                                {job.posterType === 'Agent' ? 'Agent' : 'Admin'}
+                                            </span>
+                                            <span className="text-xs text-gray-500 font-medium">
+                                                Posted by: {job.posterName || (job.posterType === 'Agent' ? 'Verified Agent' : 'General PF Admin')}
+                                            </span>
+                                        </div>
+                                        {job.contactPhone && (
+                                            <div className="w-full text-xs text-blue-600 mt-2">
+                                                Contact: {job.contactPhone} {job.contactEmail && `| ${job.contactEmail}`}
+                                            </div>
+                                        )}
                                     </div>
-                                    <button
-                                        onClick={() => handleApply(job)}
-                                        className="px-8 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors whitespace-nowrap"
-                                    >
-                                        Apply Now
-                                    </button>
+                                    {job.posterType === 'Agent' ? (
+                                        <div className="flex flex-col items-end gap-2">
+                                            <div className="text-right">
+                                                <p className="text-xs text-gray-500 mb-1">Contact Agent:</p>
+                                                <a
+                                                    href={`tel:${job.contactPhone}`}
+                                                    className="text-lg font-bold text-blue-600 hover:text-blue-700 flex items-center gap-2"
+                                                >
+                                                    <Phone className="w-4 h-4" />
+                                                    {job.contactPhone}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <button
+                                            onClick={() => handleApply(job)}
+                                            className="px-8 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors whitespace-nowrap"
+                                        >
+                                            Apply Now
+                                        </button>
+                                    )}
                                 </div>
                             </div>
                         ))}
@@ -372,6 +400,6 @@ export default function JobSeekersPage() {
                     </div>
                 )}
             </div>
-        </div>
+        </div >
     );
 }

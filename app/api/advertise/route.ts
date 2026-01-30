@@ -6,7 +6,7 @@ import { ObjectId } from 'mongodb';
 export async function GET() {
     try {
         const client = await clientPromise;
-        const db = client.db("general_pf");
+        const db = client.db("general-pf");
         const advertisements = await db.collection("advertisements").find({}).sort({ createdAt: -1 }).toArray();
 
         return NextResponse.json({ success: true, advertisements });
@@ -31,12 +31,20 @@ export async function POST(request: Request) {
         let paymentProofUrl = '';
 
         if (paymentProofFile) {
-            const buffer = Buffer.from(await paymentProofFile.arrayBuffer());
-            paymentProofUrl = await uploadToCloudinary(buffer, 'general-pf/advertisements');
+            try {
+                const buffer = Buffer.from(await paymentProofFile.arrayBuffer());
+                paymentProofUrl = await uploadToCloudinary(buffer, 'general-pf/advertisements');
+            } catch (uploadError) {
+                console.error("Cloudinary upload failed:", uploadError);
+                return NextResponse.json({
+                    success: false,
+                    error: 'Failed to upload payment proof. Please check your internet connection or try a smaller file.'
+                }, { status: 500 });
+            }
         }
 
         const client = await clientPromise;
-        const db = client.db("general_pf");
+        const db = client.db("general-pf");
 
         const newAdvertisement = {
             businessName,
@@ -48,6 +56,7 @@ export async function POST(request: Request) {
             plan,
             paymentProof: paymentProofUrl,
             status: 'pending', // pending, active, rejected, expired
+            accessCode: Math.floor(100000 + Math.random() * 900000).toString(),
             createdAt: new Date(),
         };
 
@@ -65,7 +74,7 @@ export async function PATCH(request: Request) {
         const { id, status } = await request.json();
 
         const client = await clientPromise;
-        const db = client.db("general_pf");
+        const db = client.db("general-pf");
 
         await db.collection("advertisements").updateOne(
             { _id: new ObjectId(id) },

@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Upload, CheckCircle2, Image as ImageIcon, Video } from "lucide-react";
+import { Upload, CheckCircle2, Image as ImageIcon } from "lucide-react";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
 
 export default function ListProperty() {
@@ -173,24 +173,17 @@ export default function ListProperty() {
                                         Media Uploads
                                     </h3>
 
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                        <div className="space-y-2">
-                                            <Label htmlFor="photos">Upload Photos</Label>
-                                            <div className="border-2 border-dashed border-gray-200 dark:border-white/10 rounded-lg p-4 text-center hover:bg-gray-50 dark:hover:bg-white/5 transition-colors cursor-pointer">
-                                                <ImageIcon className="w-8 h-8 mx-auto text-gray-400 mb-2" />
-                                                <Input id="photos" name="photos" type="file" accept="image/*" multiple className="hidden" />
-                                                <Label htmlFor="photos" className="cursor-pointer text-indigo-600 dark:text-indigo-400">Click to upload images</Label>
-                                                <p className="text-xs text-gray-400 mt-1">Max 5MB per image</p>
-                                            </div>
-                                        </div>
-                                        <div className="space-y-2">
-                                            <Label htmlFor="videos">Upload Video (Optional)</Label>
-                                            <div className="border-2 border-dashed border-gray-200 dark:border-white/10 rounded-lg p-4 text-center hover:bg-gray-50 dark:hover:bg-white/5 transition-colors cursor-pointer">
-                                                <Video className="w-8 h-8 mx-auto text-gray-400 mb-2" />
-                                                <Input id="videos" name="videos" type="file" accept="video/*" className="hidden" />
-                                                <Label htmlFor="videos" className="cursor-pointer text-indigo-600 dark:text-indigo-400">Click to upload video</Label>
-                                                <p className="text-xs text-gray-400 mt-1">Max 20MB</p>
-                                            </div>
+                                    <div className="space-y-2">
+                                        <Label htmlFor="photos">Upload Photos</Label>
+                                        <div className="border-2 border-dashed border-gray-200 dark:border-white/10 rounded-xl p-8 text-center hover:bg-gray-50 dark:hover:bg-white/5 transition-all cursor-pointer group">
+                                            <ImageIcon className="w-12 h-12 mx-auto text-gray-400 mb-4 group-hover:scale-110 transition-transform duration-300" />
+                                            <Input id="photos" name="photos" type="file" accept="image/*" multiple className="hidden" />
+                                            <Label htmlFor="photos" className="cursor-pointer text-lg font-bold text-indigo-600 dark:text-indigo-400">
+                                                Click to Select Property Photos
+                                            </Label>
+                                            <p className="text-sm text-gray-400 mt-2">
+                                                Professional photos increase leads by 3x. (Max 5MB per image)
+                                            </p>
                                         </div>
                                     </div>
                                 </div>

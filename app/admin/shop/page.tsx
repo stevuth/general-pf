@@ -8,6 +8,26 @@ import AddProductModal from '@/components/admin/AddProductModal';
 import ConfirmationModal from '@/components/ui/ConfirmationModal';
 import Image from 'next/image';
 
+interface Product {
+    _id: string;
+    name: string;
+    category: string;
+    price: string;
+    description: string;
+    imageUrl?: string;
+    createdAt: string;
+}
+
+interface ProductRequest {
+    _id: string;
+    userName: string;
+    userPhone: string;
+    productName: string;
+    budget?: string;
+    description: string;
+    createdAt: string;
+}
+
 // Simple Tab Button Component (Reused)
 const TabButton = ({ isActive, onClick, children }: { isActive: boolean; onClick: () => void; children: React.ReactNode }) => (
     <button
@@ -23,8 +43,8 @@ const TabButton = ({ isActive, onClick, children }: { isActive: boolean; onClick
 
 export default function ShopAdminPage() {
     const [activeTab, setActiveTab] = useState<'products' | 'requests'>('products');
-    const [products, setProducts] = useState<any[]>([]);
-    const [requests, setRequests] = useState<any[]>([]);
+    const [products, setProducts] = useState<Product[]>([]);
+    const [requests, setRequests] = useState<ProductRequest[]>([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState("");
 

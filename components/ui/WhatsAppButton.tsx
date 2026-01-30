@@ -10,14 +10,17 @@ export default function WhatsAppButton() {
     const whatsappNumber = "2349059456831"; // +234 905 945 6831
     const whatsappUrl = `https://wa.me/${whatsappNumber}`;
 
-    // Hide prompt when chat is expanded
-    useEffect(() => {
-        if (isExpanded) {
+    const toggleExpanded = () => {
+        setIsExpanded(!isExpanded);
+        if (!isExpanded) {
             setShowPrompt(false);
-        } else {
-            // Optional: Show prompt again after closing? 
-            // Let's keep it hidden once interacted or show it after delay
-            const timer = setTimeout(() => setShowPrompt(true), 1000);
+        }
+    };
+
+    // Show prompt again after a delay when closed
+    useEffect(() => {
+        if (!isExpanded) {
+            const timer = setTimeout(() => setShowPrompt(true), 3000);
             return () => clearTimeout(timer);
         }
     }, [isExpanded]);
@@ -84,7 +87,7 @@ export default function WhatsAppButton() {
                 </AnimatePresence>
 
                 <motion.button
-                    onClick={() => setIsExpanded(!isExpanded)}
+                    onClick={toggleExpanded}
                     className="group relative w-16 h-16 bg-[#25D366] hover:bg-[#20BA5A] rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}

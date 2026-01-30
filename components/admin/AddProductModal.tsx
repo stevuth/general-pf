@@ -62,84 +62,119 @@ export default function AddProductModal({ isOpen, onClose, onSuccess }: AddProdu
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent className="sm:max-w-[500px]">
-                <DialogHeader>
+            <DialogContent className="sm:max-w-[500px] p-0 overflow-hidden flex flex-col max-h-[90vh]">
+                <DialogHeader className="p-6 pb-2 border-b">
                     <DialogTitle>Add New Product</DialogTitle>
                 </DialogHeader>
-                <form onSubmit={handleSubmit} className="space-y-4 py-4">
-                    <div className="space-y-2">
-                        <label className="text-sm font-medium">Product Name</label>
-                        <input
-                            name="name"
-                            required
-                            value={formData.name}
-                            onChange={handleChange}
-                            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                            placeholder="e.g. Industrial Drill"
-                        />
-                    </div>
 
-                    <div className="grid grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                            <label className="text-sm font-medium">Price (₦)</label>
-                            <input
-                                name="price"
-                                type="number"
-                                required
-                                value={formData.price}
-                                onChange={handleChange}
-                                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                                placeholder="0.00"
-                            />
+                <div className="flex-1 overflow-y-auto p-6 space-y-6">
+                    <form id="add-product-form" onSubmit={handleSubmit} className="space-y-6">
+                        <div className="space-y-4">
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium text-gray-700">Product Name</label>
+                                <Input
+                                    name="name"
+                                    required
+                                    value={formData.name}
+                                    onChange={handleChange}
+                                    placeholder="e.g. Premium Power Drill"
+                                    className="focus:ring-2 focus:ring-blue-500/20 transition-all"
+                                />
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="space-y-2">
+                                    <label className="text-sm font-medium text-gray-700">Price (₦)</label>
+                                    <Input
+                                        name="price"
+                                        type="number"
+                                        required
+                                        value={formData.price}
+                                        onChange={handleChange}
+                                        placeholder="0"
+                                        className="focus:ring-2 focus:ring-blue-500/20 transition-all"
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-sm font-medium text-gray-700">Category</label>
+                                    <Input
+                                        name="category"
+                                        required
+                                        value={formData.category}
+                                        onChange={handleChange}
+                                        placeholder="e.g. Tools"
+                                        className="focus:ring-2 focus:ring-blue-500/20 transition-all"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium text-gray-700">Image URL</label>
+                                <Input
+                                    name="imageUrl"
+                                    value={formData.imageUrl}
+                                    onChange={handleChange}
+                                    placeholder="https://example.com/image.jpg"
+                                    className="focus:ring-2 focus:ring-blue-500/20 transition-all"
+                                />
+                                <p className="text-xs text-gray-500">
+                                    Paste a direct link to a product image.
+                                </p>
+                            </div>
+
+                            {/* Image Preview Area */}
+                            {formData.imageUrl && (
+                                <div className="space-y-2">
+                                    <label className="text-sm font-medium text-gray-700">Image Preview</label>
+                                    <div className="relative h-48 w-full rounded-xl overflow-hidden bg-gray-50 border-2 border-dashed border-gray-200 group">
+                                        <img
+                                            src={formData.imageUrl}
+                                            alt="Preview"
+                                            className="w-full h-full object-contain p-2"
+                                            onError={(e) => {
+                                                (e.target as HTMLImageElement).src = 'https://placehold.co/400x300?text=Invalid+Image+URL';
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            )}
+
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium text-gray-700">Description</label>
+                                <Textarea
+                                    name="description"
+                                    required
+                                    rows={5}
+                                    value={formData.description}
+                                    onChange={handleChange}
+                                    placeholder="Describe the product's features, specifications, and condition..."
+                                    className="min-h-[120px] focus:ring-2 focus:ring-blue-500/20 transition-all resize-none"
+                                />
+                            </div>
                         </div>
-                        <div className="space-y-2">
-                            <label className="text-sm font-medium">Category</label>
-                            <input
-                                name="category"
-                                required
-                                value={formData.category}
-                                onChange={handleChange}
-                                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                                placeholder="e.g. Electronics"
-                            />
-                        </div>
-                    </div>
+                    </form>
+                </div>
 
-                    <div className="space-y-2">
-                        <label className="text-sm font-medium">Image URL</label>
-                        <input
-                            name="imageUrl"
-                            value={formData.imageUrl}
-                            onChange={handleChange}
-                            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                            placeholder="https://example.com/image.jpg"
-                        />
-                        <p className="text-xs text-muted-foreground text-gray-500">
-                            Paste a direct link to an image.
-                        </p>
-                    </div>
-
-                    <div className="space-y-2">
-                        <label className="text-sm font-medium">Description</label>
-                        <textarea
-                            name="description"
-                            required
-                            rows={3}
-                            value={formData.description}
-                            onChange={handleChange}
-                            className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                            placeholder="Product details..."
-                        />
-                    </div>
-
-                    <DialogFooter>
-                        <Button type="button" variant="outline" onClick={onClose}>Cancel</Button>
-                        <Button type="submit" disabled={loading} className="bg-blue-600 hover:bg-blue-700 text-white">
-                            {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                <DialogFooter className="p-6 pt-2 border-t bg-gray-50/50">
+                    <div className="flex items-center justify-end gap-3 w-full">
+                        <Button type="button" variant="outline" onClick={onClose} className="rounded-xl">
+                            Cancel
+                        </Button>
+                        <Button
+                            form="add-product-form"
+                            type="submit"
+                            disabled={loading}
+                            className="bg-blue-600 hover:bg-blue-700 text-white px-8 rounded-xl shadow-lg shadow-blue-500/20 transition-all active:scale-95"
+                        >
+                            {loading ? (
+                                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                            ) : (
+                                <Upload className="mr-2 h-4 w-4" />
+                            )}
                             Create Product
                         </Button>
-                    </DialogFooter>
-                </form>
+                    </div>
+                </DialogFooter>
             </DialogContent>
         </Dialog>
     );

@@ -1,17 +1,28 @@
 "use client";
 
-import { useState } from "react";
 import LogisticsDetailsModal from "@/components/admin/LogisticsDetailsModal";
 
+interface LogisticsRequest {
+    _id: string;
+    name: string;
+    phone: string;
+    pickup: string;
+    dropoff: string;
+    description: string;
+    email: string;
+    date: string;
+    createdAt: string;
+}
+
 interface LogisticsAdminClientProps {
-    requests: any[];
+    requests: LogisticsRequest[];
 }
 
 export default function LogisticsAdminClient({ requests }: LogisticsAdminClientProps) {
-    const [selectedRequest, setSelectedRequest] = useState<any>(null);
+    const [selectedRequest, setSelectedRequest] = useState<LogisticsRequest | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const handleRequestClick = (request: any) => {
+    const handleRequestClick = (request: LogisticsRequest) => {
         setSelectedRequest(request);
         setIsModalOpen(true);
     };
@@ -32,7 +43,6 @@ export default function LogisticsAdminClient({ requests }: LogisticsAdminClientP
                                 <th className="p-4 font-semibold text-gray-900 dark:text-white">Name</th>
                                 <th className="p-4 font-semibold text-gray-900 dark:text-white">Pickup</th>
                                 <th className="p-4 font-semibold text-gray-900 dark:text-white">Dropoff</th>
-                                <th className="p-4 font-semibold text-gray-900 dark:text-white">Vehicle</th>
                                 <th className="p-4 font-semibold text-gray-900 dark:text-white">Date</th>
                                 <th className="p-4 font-semibold text-gray-900 dark:text-white">Actions</th>
                             </tr>
@@ -50,7 +60,6 @@ export default function LogisticsAdminClient({ requests }: LogisticsAdminClientP
                                     </td>
                                     <td className="p-4 text-gray-700 dark:text-gray-300">{req.pickup}</td>
                                     <td className="p-4 text-gray-700 dark:text-gray-300">{req.dropoff}</td>
-                                    <td className="p-4 text-gray-700 dark:text-gray-300 capitalize">{req.vehicle}</td>
                                     <td className="p-4 text-gray-700 dark:text-gray-300">{req.date}</td>
                                     <td className="p-4">
                                         <button

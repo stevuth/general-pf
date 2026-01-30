@@ -141,26 +141,11 @@ export default function LogisticsRequest() {
                                         <Textarea id="description" name="description" required placeholder="Describe what you are shipping (e.g., Furniture, Electronics, Documents)..." />
                                     </div>
 
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                        <div className="space-y-2">
-                                            <Label htmlFor="vehicle">Vehicle Type Needed</Label>
-                                            <Select name="vehicle">
-                                                <SelectTrigger>
-                                                    <SelectValue placeholder="Select vehicle" />
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                    <SelectItem value="bike">Motorbike (Small Parcels)</SelectItem>
-                                                    <SelectItem value="van">Mini Van (Medium Load)</SelectItem>
-                                                    <SelectItem value="truck">Truck (Heavy Cargo)</SelectItem>
-                                                </SelectContent>
-                                            </Select>
-                                        </div>
-                                        <div className="space-y-2">
-                                            <Label htmlFor="date">Preferred Date</Label>
-                                            <div className="relative">
-                                                <Calendar className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
-                                                <Input id="date" name="date" type="date" className="pl-9" required />
-                                            </div>
+                                    <div className="space-y-2">
+                                        <Label htmlFor="date">Preferred Date</Label>
+                                        <div className="relative">
+                                            <Calendar className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
+                                            <Input id="date" name="date" type="date" className="pl-9" required />
                                         </div>
                                     </div>
                                 </div>

@@ -174,15 +174,38 @@ export default function LatestUpdates() {
                                                         <span className="text-secondary mr-3">₦</span>
                                                         {job.salary}
                                                     </div>
+                                                    <div className="flex items-center text-xs font-medium pt-2 mt-2">
+                                                        <span className={`px-2 py-0.5 rounded mr-2 ${job.posterType === 'Agent' ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700'}`}>
+                                                            {job.posterType === 'Agent' ? 'Agent' : 'Admin'}
+                                                        </span>
+                                                        <span className="text-gray-500 truncate max-w-[150px]">
+                                                            {job.posterName || (job.posterType === 'Agent' ? 'Verified Agent' : 'General PF Admin')}
+                                                        </span>
+                                                    </div>
                                                 </div>
 
-                                                <Link
-                                                    href="/hr/applicants?tab=form"
-                                                    className="inline-flex items-center text-primary font-bold text-sm uppercase tracking-wider group-hover:text-secondary transition-colors"
-                                                >
-                                                    Apply Now
-                                                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                                                </Link>
+                                                {job.posterType === 'Agent' ? (
+                                                    <div className="mt-4 pt-4 border-t border-gray-100">
+                                                        <p className="text-xs text-gray-500 mb-2">Contact Agent:</p>
+                                                        <a
+                                                            href={`tel:${job.contactPhone}`}
+                                                            className="inline-flex items-center text-blue-600 font-bold text-sm hover:text-blue-700 transition-colors gap-2"
+                                                        >
+                                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                                            </svg>
+                                                            {job.contactPhone}
+                                                        </a>
+                                                    </div>
+                                                ) : (
+                                                    <Link
+                                                        href="/hr/applicants?tab=form"
+                                                        className="inline-flex items-center text-primary font-bold text-sm uppercase tracking-wider group-hover:text-secondary transition-colors"
+                                                    >
+                                                        Apply Now
+                                                        <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                                                    </Link>
+                                                )}
                                             </div>
                                         </motion.div>
                                     ))

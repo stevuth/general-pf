@@ -52,7 +52,8 @@ export default function AdvertisePage() {
             if (response.ok) {
                 setSubmitted(true);
             } else {
-                alert("Failed to submit advertisement request. Please try again.");
+                const data = await response.json();
+                alert(data.error || "Failed to submit advertisement request. Please try again.");
             }
         } catch (error) {
             console.error("Error submitting form:", error);
@@ -71,11 +72,17 @@ export default function AdvertisePage() {
                     </div>
                     <h2 className="text-3xl font-bold text-gray-900 mb-4">Request Submitted!</h2>
                     <p className="text-gray-600 mb-8">
-                        Thank you for choosing to advertise with us. Your request will be reviewed and processed shortly.
+                        Thank you. Your request is under review. improved
+                        Once verified, you will receive an email with your <strong>Access Code</strong> to log in and start posting.
                     </p>
-                    <Button asChild className="bg-blue-600 hover:bg-blue-700">
-                        <a href="/">Back to Home</a>
-                    </Button>
+                    <div className="space-y-3">
+                        <Button asChild className="w-full bg-blue-600 hover:bg-blue-700">
+                            <a href="/">Back to Home</a>
+                        </Button>
+                        <Button asChild variant="outline" className="w-full">
+                            <a href="/advertise/portal">Go to Advertiser Portal</a>
+                        </Button>
+                    </div>
                 </div>
             </div>
         );
@@ -86,8 +93,13 @@ export default function AdvertisePage() {
             <WhatsAppButton />
             <div className="min-h-screen bg-gray-50 pt-20 pb-12">
                 {/* Header */}
-                <div className="bg-blue-900 text-white py-16 mb-12">
-                    <div className="container mx-auto px-4 text-left">
+                <div className="bg-blue-900 text-white py-16 mb-12 relative overflow-hidden">
+                    <div className="absolute top-4 right-4 z-10">
+                        <Button asChild variant="outline" className="bg-white/10 text-white hover:bg-white hover:text-blue-900 border-white/20 backdrop-blur-sm">
+                            <a href="/advertise/portal">Advertiser Login</a>
+                        </Button>
+                    </div>
+                    <div className="container mx-auto px-4 text-left relative z-10">
                         <motion.h1
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -99,7 +111,7 @@ export default function AdvertisePage() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.1 }}
-                            className="text-xl text-blue-100 max-w-2xl"
+                            className="text-xl text-blue-100 max-w-2xl text-balance"
                         >
                             Promote your business to a wider audience. Choose a plan that suits your needs and let us handle the rest.
                         </motion.p>
@@ -125,7 +137,7 @@ export default function AdvertisePage() {
                             <div className="bg-blue-50 p-6 rounded-2xl border border-blue-100">
                                 <h3 className="text-lg font-bold text-blue-900 mb-2">Bank Details</h3>
                                 <p className="text-sm text-blue-800 mb-4">Please make payment to any of the accounts below before submitting.</p>
-                                
+
                                 <div className="space-y-4">
                                     <div className="bg-white rounded-lg p-3 border border-blue-100">
                                         <p className="text-xs text-blue-600 font-bold mb-2">Option 1</p>
@@ -135,7 +147,7 @@ export default function AdvertisePage() {
                                             <p><span className="font-semibold">Account Number:</span> 1027349433</p>
                                         </div>
                                     </div>
-                                    
+
                                     <div className="bg-white rounded-lg p-3 border border-blue-100">
                                         <p className="text-xs text-blue-600 font-bold mb-2">Option 2</p>
                                         <div className="space-y-1 text-sm">
@@ -203,19 +215,52 @@ export default function AdvertisePage() {
                                     </div>
 
                                     <div className="space-y-2">
-                                        <Label htmlFor="businessType">Business Type</Label>
-                                        <Select onValueChange={(value) => setFormData({ ...formData, businessType: value })} required>
-                                            <SelectTrigger>
-                                                <SelectValue placeholder="Select business category" />
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                <SelectItem value="HR Services">HR Services</SelectItem>
-                                                <SelectItem value="Logistics">Logistics</SelectItem>
-                                                <SelectItem value="Real Estate">Real Estate</SelectItem>
-                                                <SelectItem value="Automobile">Automobile Services</SelectItem>
-                                                <SelectItem value="Other">Other</SelectItem>
-                                            </SelectContent>
-                                        </Select>
+                                        <Label>Business Type(s)</Label>
+                                        <p className="text-sm text-gray-500 mb-3">Select all that apply</p>
+                                        <div className="space-y-3">
+                                            <div className="flex items-center space-x-3 p-3 border-2 border-gray-200 rounded-lg hover:border-blue-400 transition-colors">
+                                                <input
+                                                    type="checkbox"
+                                                    id="hrServices"
+                                                    checked={formData.businessType.includes("HR Services")}
+                                                    onChange={(e) => {
+                                                        const types = formData.businessType.split(",").filter(t => t);
+                                                        if (e.target.checked) {
+                                                            types.push("HR Services");
+                                                        } else {
+                                                            const index = types.indexOf("HR Services");
+                                                            if (index > -1) types.splice(index, 1);
+                                                        }
+                                                        setFormData({ ...formData, businessType: types.join(",") });
+                                                    }}
+                                                    className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
+                                                />
+                                                <label htmlFor="hrServices" className="text-sm font-medium text-gray-700 cursor-pointer flex-1">
+                                                    HR Services (Post Job Openings)
+                                                </label>
+                                            </div>
+                                            <div className="flex items-center space-x-3 p-3 border-2 border-gray-200 rounded-lg hover:border-blue-400 transition-colors">
+                                                <input
+                                                    type="checkbox"
+                                                    id="realEstate"
+                                                    checked={formData.businessType.includes("Real Estate")}
+                                                    onChange={(e) => {
+                                                        const types = formData.businessType.split(",").filter(t => t);
+                                                        if (e.target.checked) {
+                                                            types.push("Real Estate");
+                                                        } else {
+                                                            const index = types.indexOf("Real Estate");
+                                                            if (index > -1) types.splice(index, 1);
+                                                        }
+                                                        setFormData({ ...formData, businessType: types.join(",") });
+                                                    }}
+                                                    className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
+                                                />
+                                                <label htmlFor="realEstate" className="text-sm font-medium text-gray-700 cursor-pointer flex-1">
+                                                    Real Estate (Post Properties)
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div className="space-y-2">
@@ -254,7 +299,18 @@ export default function AdvertisePage() {
                                                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                                                 accept="image/*,.pdf"
                                                 required
-                                                onChange={(e) => setPaymentProof(e.target.files?.[0] || null)}
+                                                onChange={(e) => {
+                                                    const file = e.target.files?.[0];
+                                                    if (file) {
+                                                        if (file.size > 5 * 1024 * 1024) {
+                                                            alert("File size must be less than 5MB");
+                                                            e.target.value = "";
+                                                            setPaymentProof(null);
+                                                            return;
+                                                        }
+                                                        setPaymentProof(file);
+                                                    }
+                                                }}
                                             />
                                             <Upload className="w-8 h-8 text-gray-400 mx-auto mb-2" />
                                             <p className="text-sm text-gray-600 font-medium">

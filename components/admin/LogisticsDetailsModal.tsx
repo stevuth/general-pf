@@ -65,10 +65,6 @@ export default function LogisticsDetailsModal({ request, isOpen, onClose }: Logi
                                 <p className="text-gray-900 dark:text-white whitespace-pre-line">{request.description || 'N/A'}</p>
                             </div>
                             <div>
-                                <label className="text-sm font-medium text-gray-500 dark:text-gray-400">Vehicle Type</label>
-                                <p className="text-gray-900 dark:text-white capitalize">{request.vehicle || 'N/A'}</p>
-                            </div>
-                            <div>
                                 <label className="text-sm font-medium text-gray-500 dark:text-gray-400">Preferred Date</label>
                                 <p className="text-gray-900 dark:text-white">{request.date || 'N/A'}</p>
                             </div>
