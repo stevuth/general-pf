@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import LogisticsDetailsModal from "@/components/admin/LogisticsDetailsModal";
 
 interface LogisticsRequest {
