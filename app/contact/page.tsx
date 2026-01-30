@@ -63,9 +63,14 @@ export default function Contact() {
                             <p className="text-gray-600 dark:text-gray-400 mb-4">
                                 Mon-Fri from 8am to 5pm
                             </p>
-                            <a href="tel:+2348120065303" className="text-lg font-bold text-blue-600 hover:text-blue-700 transition-colors">
-                                +234 812 006 5303
-                            </a>
+                            <div className="flex flex-col gap-2">
+                                <a href="tel:+2348120065303" className="text-lg font-bold text-blue-600 hover:text-blue-700 transition-colors">
+                                    +234 812 006 5303
+                                </a>
+                                <a href="tel:+2349059456831" className="text-lg font-bold text-blue-600 hover:text-blue-700 transition-colors">
+                                    +234 905 945 6831
+                                </a>
+                            </div>
                         </motion.div>
 
                         {/* Email Us */}

@@ -86,7 +86,7 @@ export default function GuarantorForm({ jobTitle, jobId }: GuarantorFormProps) {
                     </div>
                     <div>
                         <strong className="text-gray-700 block">Phone:</strong>
-                        <span className="text-gray-900">08120065303</span>
+                        <span className="text-gray-900">08120065303, 09059456831</span>
                     </div>
                 </div>
                 <p className="text-center text-blue-600 italic mt-4 font-medium">"Connecting the globe with solutions"</p>
@@ -291,7 +291,7 @@ export default function GuarantorForm({ jobTitle, jobId }: GuarantorFormProps) {
                                         <div className="text-sm text-gray-700 space-y-1">
                                             <p><strong>Bank:</strong> PALM PAY</p>
                                             <p><strong>Account Number:</strong> 8120065303</p>
-                                            <p><strong>Account Name:</strong> GENERAL CHINWEUBA</p>
+                                            <p><strong>Account Name:</strong> GENERAL CHINWEUBA FAVOUR</p>
                                         </div>
                                     </div>
                                 </div>

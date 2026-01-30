@@ -152,7 +152,7 @@ export default function AdvertisePage() {
                                         <p className="text-xs text-blue-600 font-bold mb-2">Option 2</p>
                                         <div className="space-y-1 text-sm">
                                             <p><span className="font-semibold">Bank:</span> PALM PAY</p>
-                                            <p><span className="font-semibold">Account Name:</span> GENERAL CHINWEUBA</p>
+                                            <p><span className="font-semibold">Account Name:</span> GENERAL CHINWEUBA FAVOUR</p>
                                             <p><span className="font-semibold">Account Number:</span> 8120065303</p>
                                         </div>
                                     </div>

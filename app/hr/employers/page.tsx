@@ -132,7 +132,7 @@ export default function EmployersPage() {
                             </div>
                             <div>
                                 <strong className="text-gray-700">Phone:</strong>
-                                <p className="text-gray-900">08120065303</p>
+                                <p className="text-gray-900">08120065303, 09059456831</p>
                             </div>
                             <div>
                                 <strong className="text-gray-700">Email:</strong>
@@ -486,7 +486,7 @@ export default function EmployersPage() {
                                     <div className="bg-white rounded-lg p-4">
                                         <p className="text-xs text-blue-600 font-bold mb-2">Option 2</p>
                                         <div className="space-y-1">
-                                            <p className="text-gray-700"><strong>Account Name:</strong> GENERAL CHINWEUBA</p>
+                                            <p className="text-gray-700"><strong>Account Name:</strong> GENERAL CHINWEUBA FAVOUR</p>
                                             <p className="text-gray-700"><strong>Account Number:</strong> 8120065303</p>
                                             <p className="text-gray-700"><strong>Bank:</strong> PALM PAY</p>
                                         </div>

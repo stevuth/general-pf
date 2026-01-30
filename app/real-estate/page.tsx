@@ -211,7 +211,7 @@ export default function RealEstate() {
                                 <div className="flex items-center gap-4 text-indigo-200 mt-2">
                                     <div className="flex items-center gap-2">
                                         <Phone className="w-5 h-5" />
-                                        <span className="font-semibold">08120065303</span>
+                                        <span className="font-semibold">0812 006 5303, 0905 945 6831</span>
                                     </div>
                                 </div>
                             </div>

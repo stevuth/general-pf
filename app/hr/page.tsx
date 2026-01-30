@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     twitter: {
         card: "summary_large_image",
         title: "HR Services Lagos | Recruitment Agency Nigeria",
-        description: "Professional HR services - recruitment, staffing & training in Lagos Nigeria. Call +234 812 006 5303",
+        description: "Professional HR services - recruitment, staffing & training in Lagos Nigeria. Call +234 812 006 5303, +234 905 945 6831",
     },
     alternates: {
         canonical: "https://www.generalpf.com/hr",
@@ -41,7 +41,7 @@ const hrServiceSchema = {
     "provider": {
         "@type": "Organization",
         "name": "General PF Global Resources",
-        "telephone": "+234-812-006-5303",
+        "telephone": "+234-812-006-5303, +234-905-945-6831",
         "address": {
             "@type": "PostalAddress",
             "addressLocality": "Lagos",
