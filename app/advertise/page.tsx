@@ -25,10 +25,10 @@ export default function AdvertisePage() {
     const [submitted, setSubmitted] = useState(false);
 
     const plans = [
-        { duration: "1 Month", price: "10,000", value: "1_month" },
-        { duration: "3 Months", price: "25,000", value: "3_months" },
-        { duration: "6 Months", price: "40,000", value: "6_months" },
-        { duration: "12 Months", price: "70,000", value: "12_months" },
+        { name: "Basic Plan", duration: "1 Month", price: "10,000", value: "1_month" },
+        { name: "Standard Plan", duration: "3 Months", price: "25,000", value: "3_months" },
+        { name: "Premium Plus", duration: "6 Months", price: "40,000", value: "6_months" },
+        { name: "Enterprise Elite", duration: "12 Months", price: "70,000", value: "12_months" },
     ];
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -126,9 +126,12 @@ export default function AdvertisePage() {
                                 <h3 className="text-xl font-bold text-gray-900 mb-4">Pricing Plans</h3>
                                 <div className="space-y-4">
                                     {plans.map((plan) => (
-                                        <div key={plan.value} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                                            <span className="font-medium text-gray-700">{plan.duration}</span>
-                                            <span className="font-bold text-blue-600">₦{plan.price}</span>
+                                        <div key={plan.value} className="flex flex-col p-3 bg-gray-50 rounded-lg">
+                                            <div className="flex justify-between items-center w-full">
+                                                <span className="font-bold text-gray-900">{plan.name}</span>
+                                                <span className="font-bold text-blue-600">₦{plan.price}</span>
+                                            </div>
+                                            <span className="text-xs text-gray-500 font-medium">{plan.duration}</span>
                                         </div>
                                     ))}
                                 </div>
@@ -272,7 +275,7 @@ export default function AdvertisePage() {
                                             <SelectContent>
                                                 {plans.map((plan) => (
                                                     <SelectItem key={plan.value} value={plan.value}>
-                                                        {plan.duration} - ₦{plan.price}
+                                                        {plan.name} ({plan.duration}) - ₦{plan.price}
                                                     </SelectItem>
                                                 ))}
                                             </SelectContent>

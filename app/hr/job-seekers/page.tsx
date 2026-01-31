@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Briefcase, MapPin, Clock, DollarSign, Upload, CheckCircle, Phone } from "lucide-react";
+import JobCard from "@/components/ui/JobCard";
 
 export default function JobSeekersPage() {
     const [jobs, setJobs] = useState<any[]>([]);
@@ -326,77 +327,23 @@ export default function JobSeekersPage() {
                         <p className="text-xl text-gray-500">Loading jobs...</p>
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 gap-6">
-                        {jobs.map((job) => (
-                            <div
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {jobs.map((job, index) => (
+                            <JobCard
                                 key={job._id}
-                                className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl border-2 border-gray-100 hover:border-blue-500 transition-all duration-300"
-                            >
-                                {/* Job Details*/}
-                                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                                    <div className="flex-1">
-                                        <h3 className="text-2xl font-bold text-gray-900 mb-2">{job.title}</h3>
-                                        <p className="text-lg text-gray-700 mb-3">{job.company}</p>
-                                        <div className="flex flex-wrap gap-4 text-sm text-gray-600">
-                                            <span className="flex items-center gap-1">
-                                                <MapPin className="w-4 h-4" />
-                                                {job.location}
-                                            </span>
-
-                                            <span className="flex items-center gap-1">
-                                                <span className="w-4 h-4 flex items-center justify-center font-bold">₦</span>
-                                                {job.salary}
-                                            </span>
-                                            <span className="flex items-center gap-1">
-                                                <Clock className="w-4 h-4" />
-                                                {getTimeAgo(job.createdAt)}
-                                            </span>
-                                        </div>
-                                        <div className="mt-3 flex items-center gap-2">
-                                            <span className={`px-2 py-0.5 rounded text-xs font-semibold ${job.posterType === 'Agent' ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700'}`}>
-                                                {job.posterType === 'Agent' ? 'Agent' : 'Admin'}
-                                            </span>
-                                            <span className="text-xs text-gray-500 font-medium">
-                                                Posted by: {job.posterName || (job.posterType === 'Agent' ? 'Verified Agent' : 'General PF Admin')}
-                                            </span>
-                                        </div>
-                                        {job.contactPhone && (
-                                            <div className="w-full text-xs text-blue-600 mt-2">
-                                                Contact: {job.contactPhone} {job.contactEmail && `| ${job.contactEmail}`}
-                                            </div>
-                                        )}
-                                    </div>
-                                    {job.posterType === 'Agent' ? (
-                                        <div className="flex flex-col items-end gap-2">
-                                            <div className="text-right">
-                                                <p className="text-xs text-gray-500 mb-1">Contact Agent:</p>
-                                                <a
-                                                    href={`tel:${job.contactPhone}`}
-                                                    className="text-lg font-bold text-blue-600 hover:text-blue-700 flex items-center gap-2"
-                                                >
-                                                    <Phone className="w-4 h-4" />
-                                                    {job.contactPhone}
-                                                </a>
-                                            </div>
-                                        </div>
-                                    ) : (
-                                        <button
-                                            onClick={() => handleApply(job)}
-                                            className="px-8 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors whitespace-nowrap"
-                                        >
-                                            Apply Now
-                                        </button>
-                                    )}
-                                </div>
-                            </div>
+                                job={job}
+                                index={index}
+                                getTimeAgo={getTimeAgo}
+                                handleApply={handleApply}
+                            />
                         ))}
+                    </div>
+                )}
 
-                        {jobs.length === 0 && (
-                            <div className="text-center py-16">
-                                <Briefcase className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                                <p className="text-xl text-gray-500">No jobs available at the moment. Check back soon!</p>
-                            </div>
-                        )}
+                {jobs.length === 0 && !isLoadingJobs && (
+                    <div className="text-center py-16">
+                        <Briefcase className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+                        <p className="text-xl text-gray-500">No jobs available at the moment. Check back soon!</p>
                     </div>
                 )}
             </div>

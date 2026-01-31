@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, MapPin, Clock, Briefcase, Home, Sparkles } from "lucide-react";
 import Link from "next/link";
 import PropertyCard from "@/components/ui/PropertyCard";
+import JobCard from "@/components/ui/JobCard";
 
 export default function LatestUpdates() {
     const [activeTab, setActiveTab] = useState<"jobs" | "properties">("jobs");
@@ -133,81 +134,7 @@ export default function LatestUpdates() {
                                     </div>
                                 ) : (
                                     jobs.map((job, index) => (
-                                        <motion.div
-                                            key={job._id}
-                                            initial={{ opacity: 0, y: 50 }}
-                                            animate={{ opacity: 1, y: 0 }}
-                                            transition={{
-                                                delay: index * 0.15,
-                                                duration: 0.8,
-                                                ease: [0.22, 1, 0.36, 1]
-                                            }}
-                                            whileHover={{ y: -8, transition: { duration: 0.3 } }}
-                                            className="group relative bg-white border-2 border-blue-500 hover:border-blue-600 rounded-2xl p-8 transition-all duration-300 hover:shadow-2xl overflow-hidden"
-                                        >
-                                            {/* Gradient Overlay */}
-                                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                                            <div className="relative">
-                                                <div className="flex justify-between items-start mb-6">
-                                                    <div className="w-14 h-14 bg-gradient-to-br from-primary/10 to-primary/5 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                                                        <Briefcase className="w-6 h-6 text-primary" />
-                                                    </div>
-
-                                                </div>
-
-                                                <h3 className="text-xl font-serif font-bold text-primary mb-2 group-hover:text-secondary transition-colors">
-                                                    {job.title}
-                                                </h3>
-                                                <p className="text-secondary font-bold text-sm mb-6">{job.company}</p>
-
-                                                <div className="space-y-3 mb-8 border-t border-gray-100 pt-6">
-                                                    <div className="flex items-center text-gray-700 text-sm font-semibold">
-                                                        <MapPin className="w-4 h-4 mr-3 text-primary/50" />
-                                                        {job.location}
-                                                    </div>
-                                                    <div className="flex items-center text-gray-700 text-sm font-semibold">
-                                                        <Clock className="w-4 h-4 mr-3 text-primary/50" />
-                                                        {getTimeAgo(job.createdAt)}
-                                                    </div>
-                                                    <div className="flex items-center text-gray-900 text-sm font-bold">
-                                                        <span className="text-secondary mr-3">₦</span>
-                                                        {job.salary}
-                                                    </div>
-                                                    <div className="flex items-center text-xs font-medium pt-2 mt-2">
-                                                        <span className={`px-2 py-0.5 rounded mr-2 ${job.posterType === 'Agent' ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700'}`}>
-                                                            {job.posterType === 'Agent' ? 'Agent' : 'Admin'}
-                                                        </span>
-                                                        <span className="text-gray-500 truncate max-w-[150px]">
-                                                            {job.posterName || (job.posterType === 'Agent' ? 'Verified Agent' : 'General PF Admin')}
-                                                        </span>
-                                                    </div>
-                                                </div>
-
-                                                {job.posterType === 'Agent' ? (
-                                                    <div className="mt-4 pt-4 border-t border-gray-100">
-                                                        <p className="text-xs text-gray-500 mb-2">Contact Agent:</p>
-                                                        <a
-                                                            href={`tel:${job.contactPhone}`}
-                                                            className="inline-flex items-center text-blue-600 font-bold text-sm hover:text-blue-700 transition-colors gap-2"
-                                                        >
-                                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                                                            </svg>
-                                                            {job.contactPhone}
-                                                        </a>
-                                                    </div>
-                                                ) : (
-                                                    <Link
-                                                        href="/hr/applicants?tab=form"
-                                                        className="inline-flex items-center text-primary font-bold text-sm uppercase tracking-wider group-hover:text-secondary transition-colors"
-                                                    >
-                                                        Apply Now
-                                                        <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                                                    </Link>
-                                                )}
-                                            </div>
-                                        </motion.div>
+                                        <JobCard key={job._id} job={job} index={index} getTimeAgo={getTimeAgo} />
                                     ))
                                 )}
                             </motion.div>

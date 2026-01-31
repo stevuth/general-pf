@@ -94,7 +94,10 @@ export async function POST(request: Request) {
                 expiryDate: expiryDate.toISOString(),
                 postingLimit: postingLimit,
                 currentPosts: totalPosts,
-                remainingPosts: Math.max(0, postingLimit - totalPosts)
+                remainingPosts: Math.max(0, postingLimit - totalPosts),
+                whatsappNumber: advertiser.whatsappNumber || null,
+                whatsappEnabled: advertiser.whatsappEnabled || false,
+                whatsappExpiry: advertiser.whatsappExpiry ? advertiser.whatsappExpiry.toISOString() : null
             }
         });
 

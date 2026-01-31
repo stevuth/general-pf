@@ -9,23 +9,88 @@ export async function GET(request: NextRequest) {
         const contactEmail = searchParams.get('contactEmail');
         const contactPhone = searchParams.get('contactPhone');
 
-        const query: Record<string, any> = { status: "active" };
+        const query: Record<string, any> = {};
         if (contactEmail && contactEmail !== 'undefined') query.contactEmail = contactEmail;
-        if (contactPhone && contactPhone !== 'undefined') query.contactPhone = contactPhone;
+        else if (contactPhone && contactPhone !== 'undefined') query.contactPhone = contactPhone;
+        else query.status = { $ne: "expired" }; // Show anything that is not expired if no specific filter is provided
 
         const client = await clientPromise;
         const db = client.db("general-pf");
 
-        console.log("Fetching jobs with query:", JSON.stringify(query));
 
-        const jobs = await db.collection("job_postings")
-            .find(query)
-            .sort({ createdAt: -1 })
-            .toArray();
+
+        const jobs = await db.collection("job_postings").aggregate([
+            { $match: query },
+            { $sort: { createdAt: -1 } },
+            {
+                $lookup: {
+                    from: "advertisements",
+                    let: { phone: "$contactPhone", email: "$contactEmail" },
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: {
+                                    $or: [
+                                        { $eq: ["$phone", "$$phone"] },
+                                        { $eq: ["$email", "$$email"] }
+                                    ]
+                                }
+                            }
+                        },
+                        { $sort: { whatsappEnabled: -1, status: 1, createdAt: -1 } }
+                    ],
+                    as: "advertiserInfo"
+                }
+            },
+            {
+                $addFields: {
+                    whatsappEnabled: {
+                        $let: {
+                            vars: {
+                                advertiser: { $arrayElemAt: ["$advertiserInfo", 0] }
+                            },
+                            in: {
+                                $and: [
+                                    { $ifNull: ["$$advertiser.whatsappEnabled", false] },
+                                    { $gt: ["$$advertiser.whatsappExpiry", new Date()] }
+                                ]
+                            }
+                        }
+                    },
+                    whatsappNumber: {
+                        $let: {
+                            vars: {
+                                advertiser: { $arrayElemAt: ["$advertiserInfo", 0] }
+                            },
+                            in: { $ifNull: ["$$advertiser.whatsappNumber", "$contactPhone"] }
+                        }
+                    },
+                    posterType: {
+                        $cond: {
+                            if: { $gt: [{ $size: "$advertiserInfo" }, 0] },
+                            then: "Agent",
+                            else: "Admin"
+                        }
+                    },
+                    posterName: {
+                        $let: {
+                            vars: {
+                                advertiser: { $arrayElemAt: ["$advertiserInfo", 0] }
+                            },
+                            in: { $ifNull: ["$$advertiser.contactPerson", "$posterName"] }
+                        }
+                    }
+                }
+            },
+            {
+                $project: {
+                    advertiserInfo: 0
+                }
+            }
+        ]).toArray();
 
         return NextResponse.json({ success: true, jobs: JSON.parse(JSON.stringify(jobs)) });
     } catch (error) {
-        console.error("Error fetching jobs:", error);
         return NextResponse.json({ success: false, message: "Failed to fetch jobs" }, { status: 500 });
     }
 }
@@ -105,7 +170,6 @@ export async function POST(request: NextRequest) {
         }, { status: 201 });
 
     } catch (error) {
-        console.error("Error creating job:", error);
         return NextResponse.json({ success: false, message: "Failed to create job" }, { status: 500 });
     }
 }
@@ -130,7 +194,6 @@ export async function PATCH(request: NextRequest) {
 
         return NextResponse.json({ success: true, message: "Job updated successfully" });
     } catch (error) {
-        console.error("Error updating job:", error);
         return NextResponse.json({ success: false, message: "Failed to update job" }, { status: 500 });
     }
 }

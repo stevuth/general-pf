@@ -7,10 +7,10 @@ import Link from "next/link";
 
 export default function AdvertiseSection() {
     const plans = [
-        { duration: "1 Month", price: "10,000", popular: false },
-        { duration: "3 Months", price: "25,000", popular: false },
-        { duration: "6 Months", price: "40,000", popular: true },
-        { duration: "12 Months", price: "70,000", popular: false }
+        { name: "Basic Plan", duration: "1 Month", price: "10,000", popular: false },
+        { name: "Standard Plan", duration: "3 Months", price: "25,000", popular: false },
+        { name: "Premium Plus", duration: "6 Months", price: "40,000", popular: true },
+        { name: "Enterprise Elite", duration: "12 Months", price: "70,000", popular: false }
     ];
 
     return (
@@ -55,10 +55,13 @@ export default function AdvertiseSection() {
                                             Popular
                                         </span>
                                     )}
-                                    <p className={`text-xs md:text-sm font-medium mb-1 ${plan.popular ? 'text-blue-800' : 'text-gray-500'}`}>
+                                    <h4 className={`text-sm md:text-base font-bold mb-0.5 ${plan.popular ? 'text-blue-900' : 'text-gray-900'}`}>
+                                        {plan.name}
+                                    </h4>
+                                    <p className={`text-[10px] md:text-xs font-medium mb-2 ${plan.popular ? 'text-blue-800/70' : 'text-gray-500'}`}>
                                         {plan.duration}
                                     </p>
-                                    <p className={`text-xl md:text-3xl font-bold ${plan.popular ? 'text-blue-900' : 'text-gray-900'}`}>
+                                    <p className={`text-xl md:text-2xl font-black ${plan.popular ? 'text-blue-900' : 'text-gray-900'}`}>
                                         ₦{plan.price}
                                     </p>
                                 </div>

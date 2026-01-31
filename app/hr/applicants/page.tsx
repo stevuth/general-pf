@@ -1,16 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { MapPin, Briefcase, DollarSign, FileText, Clock } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Briefcase, FileText } from "lucide-react";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import GuarantorForm from "@/components/forms/GuarantorForm";
 import FeedbackSection from "@/components/sections/FeedbackSection";
-
-const WHATSAPP_NUMBER = "2349059456831";
+import JobCard from "@/components/ui/JobCard";
 
 function JobApplicantsContent() {
     const searchParams = useSearchParams();
@@ -50,8 +48,8 @@ function JobApplicantsContent() {
         return posted.toLocaleDateString();
     };
 
-    const handleApplyNow = (jobTitle: string) => {
-        setSelectedJobTitle(jobTitle);
+    const handleApplyNow = (job: any) => {
+        setSelectedJobTitle(job.title);
         setActiveTab('form');
         // Scroll to top of the form area
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -62,130 +60,134 @@ function JobApplicantsContent() {
             <WhatsAppButton />
             <div className="min-h-screen bg-gray-50 dark:bg-black">
                 {/* Header */}
-                <div className="bg-blue-600 text-white py-16">
-                    <div className="container mx-auto px-4 md:px-6">
-                        <h1 className="text-3xl md:text-4xl font-bold mb-4">
-                            Job Opportunities & Applications
-                        </h1>
-                        <p className="text-lg opacity-90 max-w-2xl">
-                            Explore exciting career opportunities and submit your application.
-                        </p>
+                <div className="bg-gradient-to-r from-primary to-primary-light text-white py-24 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-grid-white opacity-10" />
+                    <div className="container mx-auto px-4 md:px-6 relative z-10">
+                        <motion.h1
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="text-5xl md:text-6xl font-serif font-bold mb-6"
+                        >
+                            Job <span className="text-secondary italic">Opportunities</span>
+                        </motion.h1>
+                        <motion.p
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.1 }}
+                            className="text-xl opacity-90 max-w-2xl font-medium"
+                        >
+                            Explore exciting career opportunities and take the next step in your professional journey with General PF Resources.
+                        </motion.p>
                     </div>
                 </div>
 
-                <div className="container mx-auto px-4 md:px-6 pt-12 pb-12">
+                <div className="container mx-auto px-4 md:px-6 pt-12 pb-20">
 
                     {/* Tabs */}
-                    <div className="flex gap-6 mb-8 border-b border-gray-200 dark:border-gray-800">
+                    <div className="flex gap-8 mb-12 border-b border-gray-200 dark:border-gray-800">
                         <button
                             onClick={() => setActiveTab('jobs')}
-                            className={`pb-3 px-2 text-sm font-medium transition-colors relative ${activeTab === 'jobs'
+                            className={`pb-4 px-2 text-sm font-bold uppercase tracking-widest transition-all relative ${activeTab === 'jobs'
                                 ? "text-primary"
-                                : "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                                : "text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
                                 }`}
                         >
-                            <span className="flex items-center gap-2 text-base">
-                                <Briefcase className="w-4 h-4" /> Job Openings
+                            <span className="flex items-center gap-3">
+                                <Briefcase className="w-5 h-5" /> Job Openings
                             </span>
                             {activeTab === 'jobs' && (
-                                <motion.div layoutId="activeTab" className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" />
+                                <motion.div layoutId="activeTabUnderline" className="absolute bottom-0 left-0 right-0 h-1 bg-primary rounded-t-full" />
                             )}
                         </button>
                         <button
                             onClick={() => setActiveTab('form')}
-                            className={`pb-3 px-2 text-sm font-medium transition-colors relative ${activeTab === 'form'
+                            className={`pb-4 px-2 text-sm font-bold uppercase tracking-widest transition-all relative ${activeTab === 'form'
                                 ? "text-primary"
-                                : "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                                : "text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
                                 }`}
                         >
-                            <span className="flex items-center gap-2 text-base">
-                                <FileText className="w-4 h-4" /> Application Form
+                            <span className="flex items-center gap-3">
+                                <FileText className="w-5 h-5" /> Application Form
                             </span>
                             {activeTab === 'form' && (
-                                <motion.div layoutId="activeTab" className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" />
+                                <motion.div layoutId="activeTabUnderline" className="absolute bottom-0 left-0 right-0 h-1 bg-primary rounded-t-full" />
                             )}
                         </button>
                     </div>
 
                     {/* Tab Content */}
-                    {activeTab === 'jobs' ? (
-                        <motion.div
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -10 }}
-                            transition={{ duration: 0.3 }}
-                        >
-                            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Available Positions</h2>
-                            {isLoadingJobs ? (
-                                <div className="text-center py-12">
-                                    <Briefcase className="w-16 h-16 text-gray-300 mx-auto mb-4 animate-pulse" />
-                                    <p className="text-gray-500">Loading jobs...</p>
+                    <AnimatePresence mode="wait">
+                        {activeTab === 'jobs' ? (
+                            <motion.div
+                                key="jobs-tab"
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: 20 }}
+                                transition={{ duration: 0.4, ease: "easeOut" }}
+                            >
+                                <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-4">
+                                    <div>
+                                        <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary">Available <span className="text-secondary italic">Positions</span></h2>
+                                        <div className="h-1.5 w-20 bg-secondary rounded-full mt-2" />
+                                    </div>
+                                    <div className="text-gray-500 font-medium bg-white px-4 py-2 rounded-full shadow-sm border border-gray-100">
+                                        Showing {jobs.length} current openings
+                                    </div>
                                 </div>
-                            ) : jobs.length === 0 ? (
-                                <div className="text-center py-12">
-                                    <Briefcase className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                                    <p className="text-gray-500">No job openings available at the moment</p>
-                                </div>
-                            ) : (
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                    {jobs.map((job) => (
-                                        <motion.div
-                                            key={job._id}
-                                            initial={{ opacity: 0, y: 20 }}
-                                            whileInView={{ opacity: 1, y: 0 }}
-                                            viewport={{ once: true }}
-                                            whileHover={{ y: -5 }}
-                                            className="bg-white dark:bg-surface-dark p-6 rounded-xl shadow-sm border border-gray-100 dark:border-white/10 hover:shadow-md transition-all"
-                                        >
-                                            <div className="flex justify-between items-start mb-4">
-                                                <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg text-blue-600 dark:text-blue-400">
-                                                    <Briefcase className="w-6 h-6" />
-                                                </div>
 
+                                {isLoadingJobs ? (
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                        {[1, 2, 3].map((n) => (
+                                            <div key={n} className="h-[400px] bg-white rounded-3xl border-2 border-gray-100 animate-pulse" />
+                                        ))}
+                                    </div>
+                                ) : jobs.length === 0 ? (
+                                    <div className="text-center py-24 bg-white rounded-3xl border border-dashed border-gray-200 shadow-sm">
+                                        <Briefcase className="w-20 h-20 text-gray-200 mx-auto mb-6" />
+                                        <h3 className="text-2xl font-serif font-bold text-gray-900 mb-2">No Openings Right Now</h3>
+                                        <p className="text-gray-500 max-w-md mx-auto">We don't have any job postings at the moment. Please check back later or contact us directly.</p>
+                                    </div>
+                                ) : (
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                        {jobs.map((job, index) => (
+                                            <JobCard
+                                                key={job._id}
+                                                job={job}
+                                                index={index}
+                                                getTimeAgo={getTimeAgo}
+                                                handleApply={handleApplyNow}
+                                            />
+                                        ))}
+                                    </div>
+                                )}
+                            </motion.div>
+                        ) : (
+                            <motion.div
+                                key="form-tab"
+                                initial={{ opacity: 0, x: 20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: -20 }}
+                                transition={{ duration: 0.4, ease: "easeOut" }}
+                                className="max-w-4xl mx-auto"
+                            >
+                                <div className="bg-white rounded-3xl shadow-elegant border border-gray-100 overflow-hidden">
+                                    <div className="bg-primary p-8 text-white">
+                                        <h2 className="text-2xl font-serif font-bold">Employment Application</h2>
+                                        <p className="text-primary-light/80 mt-2">Please fill out the form below carefully. All fields are required unless indicated otherwise.</p>
+                                        {selectedJobTitle && (
+                                            <div className="mt-4 px-4 py-2 bg-white/10 rounded-lg inline-block border border-white/20">
+                                                <span className="text-xs uppercase tracking-widest font-bold opacity-70 block">Applying for:</span>
+                                                <span className="text-lg font-bold">{selectedJobTitle}</span>
                                             </div>
-
-                                            <h3 className="font-bold text-xl text-gray-900 dark:text-white mb-2">{job.title}</h3>
-
-                                            <div className="space-y-2 text-sm text-gray-500 dark:text-gray-400 mb-4">
-                                                <div className="flex items-center gap-2">
-                                                    <MapPin className="w-4 h-4" /> {job.location}
-                                                </div>
-                                                <div className="flex items-center gap-2">
-                                                    <span className="w-4 h-4 flex items-center justify-center font-bold">₦</span> {job.salary}
-                                                </div>
-                                                <div className="flex items-center gap-2">
-                                                    <Clock className="w-4 h-4" /> {getTimeAgo(job.createdAt)}
-                                                </div>
-                                            </div>
-
-                                            {job.description && (
-                                                <p className="text-sm text-gray-600 dark:text-gray-300 mb-6 line-clamp-3">
-                                                    {job.description}
-                                                </p>
-                                            )}
-
-                                            <Button
-                                                onClick={() => handleApplyNow(job.title)}
-                                                className="w-full bg-primary hover:bg-primary/90"
-                                            >
-                                                Apply Now
-                                            </Button>
-                                        </motion.div>
-                                    ))}
+                                        )}
+                                    </div>
+                                    <div className="p-8">
+                                        <GuarantorForm jobTitle={selectedJobTitle} />
+                                    </div>
                                 </div>
-                            )}
-                        </motion.div>
-                    ) : (
-                        <motion.div
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -10 }}
-                            transition={{ duration: 0.3 }}
-                            className="max-w-4xl mx-auto"
-                        >
-                            <GuarantorForm jobTitle={selectedJobTitle} />
-                        </motion.div>
-                    )}
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                 </div>
             </div>
             <FeedbackSection />
@@ -195,7 +197,12 @@ function JobApplicantsContent() {
 
 export default function JobApplicants() {
     return (
-        <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+        <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-gray-50">
+            <div className="flex flex-col items-center">
+                <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin mb-4"></div>
+                <p className="text-gray-500 font-medium">Loading opportunities...</p>
+            </div>
+        </div>}>
             <JobApplicantsContent />
         </Suspense>
     );

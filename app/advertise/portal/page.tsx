@@ -64,6 +64,13 @@ export default function AdvertiserPortal() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [successMessage, setSuccessMessage] = useState("");
 
+    // WhatsApp Form State
+    const [whatsappForm, setWhatsappForm] = useState({
+        plan: "",
+        paymentProof: null as File | null,
+        whatsappNumber: ""
+    });
+
     const fetchMyPosts = async () => {
         if (!advertiser) return;
         setIsLoading(true);
@@ -193,6 +200,7 @@ export default function AdvertiserPortal() {
                 setIsLoggedIn(true);
                 setAdvertiser(data.advertiser);
                 setJobForm(prev => ({ ...prev, company: data.advertiser.businessName }));
+                setWhatsappForm(prev => ({ ...prev, whatsappNumber: data.advertiser.whatsappNumber || "" }));
             } else {
                 setError(data.message || "Login failed");
             }
@@ -339,6 +347,51 @@ export default function AdvertiserPortal() {
         }
     };
 
+
+    const handleWhatsappRequest = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+        setError("");
+        setSuccessMessage("");
+
+        if (!whatsappForm.plan || !whatsappForm.paymentProof || !whatsappForm.whatsappNumber) {
+            setError("Please select a plan, upload proof of payment, and provide a WhatsApp number");
+            setIsSubmitting(false);
+            return;
+        }
+
+        try {
+            const formData = new FormData();
+            formData.append("advertiserId", advertiser._id);
+            formData.append("advertiserPhone", advertiser.phone);
+            formData.append("advertiserEmail", advertiser.email);
+            formData.append("businessName", advertiser.businessName);
+            formData.append("whatsappNumber", whatsappForm.whatsappNumber);
+            formData.append("plan", whatsappForm.plan);
+            formData.append("paymentProof", whatsappForm.paymentProof);
+
+            const response = await fetch("/api/advertise/whatsapp", {
+                method: "POST",
+                body: formData,
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                setSuccessMessage("WhatsApp activation request submitted successfully!");
+                setWhatsappForm(prev => ({ ...prev, plan: "", paymentProof: null }));
+                setTimeout(() => {
+                    setSuccessMessage("");
+                }, 3000);
+            } else {
+                setError(data.message || "Failed to submit request");
+            }
+        } catch (err) {
+            setError("An error occurred while submitting request");
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
 
     if (!isLoggedIn) {
         return (
@@ -563,6 +616,19 @@ export default function AdvertiserPortal() {
                                 List Property
                             </button>
                         )}
+
+                        <button
+                            onClick={() => setActiveTab("whatsapp-activation")}
+                            className={`w-full group text-left px-4 py-3 rounded-lg flex items-center gap-3 transition-colors ${activeTab === "whatsapp-activation" ? "bg-blue-600 text-white shadow-lg shadow-blue-600/20" : "bg-white text-gray-600 hover:bg-gray-100"
+                                }`}
+                        >
+                            <div className="w-5 h-5 flex items-center justify-center text-green-500 group-hover:text-white">
+                                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.89 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.743-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.149-.174.198-.298.297-.497.099-.198.05-.372-.025-.521-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+                                </svg>
+                            </div>
+                            WhatsApp Button
+                        </button>
                     </div>
 
                     {/* Main Content */}
@@ -595,6 +661,29 @@ export default function AdvertiserPortal() {
                                             <p className="text-sm text-red-700 font-medium">
                                                 ⚠️ You've reached your posting limit. Delete old posts or upgrade your plan to post more.
                                             </p>
+                                        </div>
+                                    )}
+
+                                    {advertiser.whatsappEnabled && advertiser.whatsappExpiry && new Date(advertiser.whatsappExpiry) < new Date() && (
+                                        <div className="mt-3 p-3 bg-orange-50 border border-orange-200 rounded-lg flex items-center justify-between">
+                                            <div className="flex items-center gap-3">
+                                                <AlertCircle className="w-5 h-5 text-orange-600" />
+                                                <div>
+                                                    <p className="text-sm text-orange-800 font-bold">
+                                                        WhatsApp Button Expired
+                                                    </p>
+                                                    <p className="text-xs text-orange-700">
+                                                        Your WhatsApp chat feature has expired. Please renew it to continue receiving direct chats.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <Button
+                                                size="sm"
+                                                className="bg-orange-600 hover:bg-orange-700 text-white text-xs border-none"
+                                                onClick={() => setActiveTab("whatsapp-activation")}
+                                            >
+                                                Renew Now
+                                            </Button>
                                         </div>
                                     )}
                                 </div>
@@ -901,6 +990,196 @@ export default function AdvertiserPortal() {
                                         {isSubmitting ? "Saving..." : (isEditing ? "Update Property" : "Post Property")}
                                     </Button>
                                 </form>
+                            </div>
+                        )}
+
+                        {/* WhatsApp Activation Tab */}
+                        {activeTab === "whatsapp-activation" && (
+                            <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                                <div className="flex items-center gap-3 mb-6">
+                                    <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                                        <svg className="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.89 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.743-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.149-.174.198-.298.297-.497.099-.198.05-.372-.025-.521-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h2 className="text-2xl font-bold text-gray-900">WhatsApp Button Activation</h2>
+                                        <p className="text-gray-500">Enable direct WhatsApp chat on all your listings.</p>
+                                    </div>
+                                </div>
+
+                                {advertiser.whatsappEnabled && (
+                                    <div className="mb-8 p-4 bg-blue-50 border border-blue-100 rounded-xl flex items-center gap-3">
+                                        <ShieldCheck className="w-6 h-6 text-blue-600" />
+                                        <div>
+                                            <p className="font-bold text-blue-900">WhatsApp feature is ACTIVE</p>
+                                            <p className="text-sm text-blue-700">Expires on: {new Date(advertiser.whatsappExpiry).toLocaleDateString()}</p>
+                                        </div>
+                                    </div>
+                                )}
+
+                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                                    {/* Pricing & Link */}
+                                    <div className="space-y-6">
+                                        <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100">
+                                            <h3 className="text-lg font-bold text-gray-900 mb-4">Subscription Plans</h3>
+                                            <div className="space-y-3">
+                                                <div className="flex justify-between items-center p-3 bg-white rounded-lg border border-gray-100">
+                                                    <span className="font-medium text-gray-700">1 Month</span>
+                                                    <span className="font-bold text-blue-600">₦3,000</span>
+                                                </div>
+                                                <div className="flex justify-between items-center p-3 bg-white rounded-lg border border-gray-100">
+                                                    <span className="font-medium text-gray-700">3 Months</span>
+                                                    <span className="font-bold text-blue-600">₦7,000</span>
+                                                </div>
+                                                <div className="flex justify-between items-center p-3 bg-white rounded-lg border border-gray-100">
+                                                    <span className="font-medium text-gray-700">6 Months</span>
+                                                    <span className="font-bold text-blue-600">₦12,000</span>
+                                                </div>
+                                                <div className="flex justify-between items-center p-3 bg-white rounded-lg border border-gray-100">
+                                                    <span className="font-medium text-gray-700">12 Months</span>
+                                                    <span className="font-bold text-blue-600">₦22,000</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="bg-blue-50 p-6 rounded-2xl border border-blue-100">
+                                            <h3 className="text-lg font-bold text-blue-900 mb-2">How it works</h3>
+                                            <ul className="text-sm text-blue-800 space-y-2 list-disc pl-4">
+                                                <li>Select a package and pay to the account below.</li>
+                                                <li>Upload your receipt and submit the request.</li>
+                                                <li>Admin will verify and activate your button within 24 hours.</li>
+                                                <li>The button will appear on all your active and future listings.</li>
+                                            </ul>
+                                            <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                                <div className="p-3 bg-white rounded-lg border border-blue-100 text-[10px]">
+                                                    <p className="font-bold text-blue-900 mb-1 uppercase opacity-60">Option 1</p>
+                                                    <p className="font-bold text-blue-900 mb-1">Bank: UBA</p>
+                                                    <p className="font-bold text-blue-900 mb-1">Account: 1027349433</p>
+                                                    <p className="font-bold text-blue-900">Name: GENERAL PF GLOBAL RESOURCES</p>
+                                                </div>
+                                                <div className="p-3 bg-white rounded-lg border border-blue-100 text-[10px]">
+                                                    <p className="font-bold text-blue-900 mb-1 uppercase opacity-60">Option 2</p>
+                                                    <p className="font-bold text-blue-900 mb-1">Bank: PALM PAY</p>
+                                                    <p className="font-bold text-blue-900 mb-1">Account: 8120065303</p>
+                                                    <p className="font-bold text-blue-900">Name: GENERAL CHINWEUBA FAVOUR</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Request Form */}
+                                    <div>
+                                        {advertiser?.whatsappEnabled && (
+                                            <div className={`mb-8 p-5 rounded-2xl border shadow-sm flex items-center justify-between ${new Date(advertiser.whatsappExpiry) > new Date()
+                                                    ? "bg-gradient-to-br from-green-50 to-emerald-50 border-green-100"
+                                                    : "bg-gradient-to-br from-red-50 to-orange-50 border-orange-100"
+                                                }`}>
+                                                <div className="space-y-1">
+                                                    <div className="flex items-center gap-2">
+                                                        <span className={`w-2 h-2 rounded-full ${new Date(advertiser.whatsappExpiry) > new Date() ? "bg-green-500 animate-pulse" : "bg-red-500"}`} />
+                                                        <p className={`text-[10px] font-extrabold uppercase tracking-wider ${new Date(advertiser.whatsappExpiry) > new Date() ? "text-green-700" : "text-red-700"}`}>
+                                                            Status: {new Date(advertiser.whatsappExpiry) > new Date() ? "Active" : "Expired"}
+                                                        </p>
+                                                    </div>
+                                                    <p className={`text-sm font-medium ${new Date(advertiser.whatsappExpiry) > new Date() ? "text-green-900" : "text-red-900"}`}>
+                                                        WhatsApp Button: <span className="font-bold">+{advertiser.whatsappNumber || advertiser.phone}</span>
+                                                    </p>
+                                                    {advertiser.whatsappExpiry && (
+                                                        <p className={`text-[10px] italic ${new Date(advertiser.whatsappExpiry) > new Date() ? "text-green-600" : "text-red-600 font-bold"}`}>
+                                                            {new Date(advertiser.whatsappExpiry) > new Date() ? `Valid until ${new Date(advertiser.whatsappExpiry).toLocaleDateString()}` : `Expired on ${new Date(advertiser.whatsappExpiry).toLocaleDateString()}`}
+                                                        </p>
+                                                    )}
+                                                </div>
+                                                <div className="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center">
+                                                    {new Date(advertiser.whatsappExpiry) > new Date() ? (
+                                                        <CheckCircle className="w-7 h-7 text-green-500" />
+                                                    ) : (
+                                                        <AlertCircle className="w-7 h-7 text-red-500" />
+                                                    )}
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        {advertiser?.whatsappEnabled && new Date(advertiser.whatsappExpiry) <= new Date() && (
+                                            <div className="mb-6 p-4 bg-orange-50 border-2 border-orange-200 rounded-xl">
+                                                <h4 className="text-orange-900 font-bold flex items-center gap-2 mb-1">
+                                                    <ShieldCheck className="w-4 h-4" />
+                                                    Renewal Required
+                                                </h4>
+                                                <p className="text-xs text-orange-800">
+                                                    Your WhatsApp button is currently <strong>deactivated</strong> on all public listings because your plan has expired. Please select a new package below to reactivate it.
+                                                </p>
+                                            </div>
+                                        )}
+
+                                        {successMessage && (
+                                            <div className="mb-6 p-4 bg-green-50 text-green-700 rounded-lg flex items-center gap-2">
+                                                <CheckCircle className="w-5 h-5" />
+                                                {successMessage}
+                                            </div>
+                                        )}
+
+                                        {error && (
+                                            <div className="mb-6 p-4 bg-red-50 text-red-700 rounded-lg flex items-center gap-2">
+                                                <AlertCircle className="w-5 h-5" />
+                                                {error}
+                                            </div>
+                                        )}
+
+                                        <form onSubmit={handleWhatsappRequest} className="space-y-6">
+                                            <div className="space-y-2">
+                                                <Label htmlFor="whatsapp-number">WhatsApp Number (e.g., 2348123456789)</Label>
+                                                <Input
+                                                    id="whatsapp-number"
+                                                    type="tel"
+                                                    required
+                                                    placeholder="234..."
+                                                    value={whatsappForm.whatsappNumber}
+                                                    onChange={(e) => setWhatsappForm({ ...whatsappForm, whatsappNumber: e.target.value })}
+                                                    className="h-12 border-2 focus:border-blue-500"
+                                                />
+                                                <p className="text-[10px] text-gray-500">Include country code without + (e.g., 234 for Nigeria)</p>
+                                            </div>
+
+                                            <div className="space-y-2">
+                                                <Label htmlFor="whatsapp-plan">Select Package</Label>
+                                                <Select value={whatsappForm.plan} onValueChange={(val) => setWhatsappForm({ ...whatsappForm, plan: val })} required>
+                                                    <SelectTrigger>
+                                                        <SelectValue placeholder="Choose a plan" />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        <SelectItem value="1_month">1 Month - ₦3,000</SelectItem>
+                                                        <SelectItem value="3_months">3 Months - ₦7,000</SelectItem>
+                                                        <SelectItem value="6_months">6 Months - ₦12,000</SelectItem>
+                                                        <SelectItem value="12_months">12 Months - ₦22,000</SelectItem>
+                                                    </SelectContent>
+                                                </Select>
+                                            </div>
+
+                                            <div className="space-y-2">
+                                                <Label>Proof of Payment</Label>
+                                                <div className="border-2 border-dashed border-gray-200 rounded-lg p-6 text-center hover:border-blue-500 transition-colors relative">
+                                                    <input
+                                                        type="file"
+                                                        accept="image/*"
+                                                        required
+                                                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                                                        onChange={(e) => setWhatsappForm({ ...whatsappForm, paymentProof: e.target.files?.[0] || null })}
+                                                    />
+                                                    <Upload className="w-8 h-8 text-gray-400 mx-auto mb-2" />
+                                                    <p className="text-sm text-gray-600 font-medium">
+                                                        {whatsappForm.paymentProof ? whatsappForm.paymentProof.name : "Upload payment receipt"}
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <Button type="submit" className="w-full bg-green-600 hover:bg-green-700 text-white font-bold h-12" disabled={isSubmitting}>
+                                                {isSubmitting ? "Submitting..." : "Submit Activation Request"}
+                                            </Button>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         )}
                     </div>

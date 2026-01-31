@@ -26,10 +26,75 @@ export async function GET(request: NextRequest) {
 
         console.log("Fetching properties with query:", JSON.stringify(query));
 
-        const properties = await db.collection("properties")
-            .find(query)
-            .sort({ createdAt: -1 })
-            .toArray();
+        const properties = await db.collection("properties").aggregate([
+            { $match: query },
+            { $sort: { createdAt: -1 } },
+            {
+                $lookup: {
+                    from: "advertisements",
+                    let: { phone: "$contactPhone", email: "$contactEmail" },
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: {
+                                    $or: [
+                                        { $eq: ["$phone", "$$phone"] },
+                                        { $eq: ["$email", "$$email"] }
+                                    ]
+                                }
+                            }
+                        },
+                        { $sort: { whatsappEnabled: -1, status: 1, createdAt: -1 } }
+                    ],
+                    as: "advertiserInfo"
+                }
+            },
+            {
+                $addFields: {
+                    whatsappEnabled: {
+                        $let: {
+                            vars: {
+                                advertiser: { $arrayElemAt: ["$advertiserInfo", 0] }
+                            },
+                            in: {
+                                $and: [
+                                    { $ifNull: ["$$advertiser.whatsappEnabled", false] },
+                                    { $gt: ["$$advertiser.whatsappExpiry", new Date()] }
+                                ]
+                            }
+                        }
+                    },
+                    whatsappNumber: {
+                        $let: {
+                            vars: {
+                                advertiser: { $arrayElemAt: ["$advertiserInfo", 0] }
+                            },
+                            in: { $ifNull: ["$$advertiser.whatsappNumber", "$contactPhone"] }
+                        }
+                    },
+                    posterType: {
+                        $cond: {
+                            if: { $gt: [{ $size: "$advertiserInfo" }, 0] },
+                            then: "Agent",
+                            else: "Admin"
+                        }
+                    },
+                    posterName: {
+                        $let: {
+                            vars: {
+                                advertiser: { $arrayElemAt: ["$advertiserInfo", 0] }
+                            },
+                            in: { $ifNull: ["$$advertiser.contactPerson", "General PF Admin"] }
+                        }
+                    }
+                }
+            },
+            {
+                $project: {
+                    advertiserInfo: 0
+                }
+            }
+        ]).toArray();
 
         return NextResponse.json({ success: true, properties: JSON.parse(JSON.stringify(properties)) });
     } catch (error) {

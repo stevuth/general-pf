@@ -426,21 +426,37 @@ export default function EmployersPage() {
                         <div className="mb-10">
                             <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-blue-600">Service Options</h2>
 
-                            <p className="text-gray-600 mb-6">We have two sections of services we render:</p>
+                            <p className="text-gray-600 mb-6">We have three premium service packages to choose from:</p>
 
                             <div className="space-y-4">
                                 <label className="flex items-start p-6 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-blue-500 transition-colors">
                                     <input
                                         type="radio"
                                         name="serviceOption"
-                                        value="Section A"
+                                        value="Silver"
                                         required
                                         className="mt-1 mr-4 w-5 h-5 text-blue-600"
-                                        checked={formData.serviceOption === "Section A"}
+                                        checked={formData.serviceOption === "Silver"}
                                         onChange={(e) => setFormData({ ...formData, serviceOption: e.target.value })}
                                     />
                                     <div>
-                                        <div className="font-bold text-lg text-gray-900">Section A</div>
+                                        <div className="font-bold text-lg text-gray-900">Silver Package</div>
+                                        <div className="text-gray-600">3 months service — <span className="font-bold text-blue-600">₦30,000</span></div>
+                                    </div>
+                                </label>
+
+                                <label className="flex items-start p-6 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-blue-500 transition-colors">
+                                    <input
+                                        type="radio"
+                                        name="serviceOption"
+                                        value="Diamond"
+                                        required
+                                        className="mt-1 mr-4 w-5 h-5 text-blue-600"
+                                        checked={formData.serviceOption === "Diamond"}
+                                        onChange={(e) => setFormData({ ...formData, serviceOption: e.target.value })}
+                                    />
+                                    <div>
+                                        <div className="font-bold text-lg text-gray-900">Diamond Package</div>
                                         <div className="text-gray-600">6 months service — <span className="font-bold text-blue-600">₦50,000</span></div>
                                     </div>
                                 </label>
@@ -449,14 +465,14 @@ export default function EmployersPage() {
                                     <input
                                         type="radio"
                                         name="serviceOption"
-                                        value="Section B"
+                                        value="Gold"
                                         required
                                         className="mt-1 mr-4 w-5 h-5 text-blue-600"
-                                        checked={formData.serviceOption === "Section B"}
+                                        checked={formData.serviceOption === "Gold"}
                                         onChange={(e) => setFormData({ ...formData, serviceOption: e.target.value })}
                                     />
                                     <div>
-                                        <div className="font-bold text-lg text-gray-900">Section B</div>
+                                        <div className="font-bold text-lg text-gray-900">Gold Package</div>
                                         <div className="text-gray-600">12 months service — <span className="font-bold text-blue-600">₦80,000</span></div>
                                     </div>
                                 </label>
