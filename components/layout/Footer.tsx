@@ -32,7 +32,7 @@ export default function Footer() {
                         <span className="font-bold text-3xl tracking-tight">General PF</span>
                     </Link>
                     <p className="text-gray-400 leading-relaxed max-w-2xl mb-8 text-lg">
-                        Bridging gaps between parties and creating enabling routes to float businesses both locally and internationally. Excellence in HR, Logistics, and Real Estate.
+                        Bridging gaps between parties and creating enabling routes to float businesses both locally and internationally. Excellence in HR Services and Workforce Solutions.
                     </p>
 
                     {/* Horizontal Navigation Links */}
@@ -41,8 +41,8 @@ export default function Footer() {
                             { name: "Home", href: "/" },
                             { name: "About Us", href: "/about" },
                             { name: "HR Services", href: "/hr" },
-                            { name: "Logistics", href: "/logistics" },
-                            { name: "Real Estate", href: "/real-estate" },
+                            // { name: "Logistics", href: "/logistics" },
+                            // { name: "Real Estate", href: "/real-estate" },
                             { name: "Terms of Service", href: "/terms" },
                             { name: "Contact", href: "/contact" },
                         ].map((link) => (
@@ -84,6 +84,20 @@ export default function Footer() {
                                 <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z" />
                             </svg>
                         </a>
+                    </div>
+
+                    {/* QR Code Section */}
+                    <div className="mt-8 flex flex-col items-center gap-3">
+                        <div className="p-2 bg-white rounded-lg shadow-lg">
+                            <Image
+                                src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://gglobalresources.com/`}
+                                alt="Scan execute website"
+                                width={120}
+                                height={120}
+                                className="w-[100px] h-[100px]"
+                            />
+                        </div>
+                        <p className="text-xs text-gray-400 font-mono tracking-wider uppercase">Scan to Visit</p>
                     </div>
                 </motion.div>
 

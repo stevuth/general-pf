@@ -16,24 +16,25 @@ const slides = [
         href: "/hr",
         buttonText: "Explore HR Services"
     },
-    {
-        id: 2,
-        image: "https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
-        title: "Logistics",
-        subtitle: "Delivering Excellence",
-        description: "Reliable nationwide delivery and waybill services that keep your business moving forward.",
-        href: "/logistics",
-        buttonText: "View Logistics"
-    },
-    {
-        id: 3,
-        image: "/nigerian-house.png",
-        title: "Real Estate",
-        subtitle: "Find Your Perfect Space",
-        description: "Premium property listings, sales, rentals, and property management services tailored to your needs.",
-        href: "/real-estate",
-        buttonText: "Browse Properties"
-    }
+    // Temporarily hidden services
+    // {
+    //     id: 2,
+    //     image: "https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+    //     title: "Logistics",
+    //     subtitle: "Delivering Excellence",
+    //     description: "Reliable nationwide delivery and waybill services that keep your business moving forward.",
+    //     href: "/logistics",
+    //     buttonText: "View Logistics"
+    // },
+    // {
+    //     id: 3,
+    //     image: "/nigerian-house.png",
+    //     title: "Real Estate",
+    //     subtitle: "Find Your Perfect Space",
+    //     description: "Premium property listings, sales, rentals, and property management services tailored to your needs.",
+    //     href: "/real-estate",
+    //     buttonText: "Browse Properties"
+    // }
 ];
 
 export default function Hero() {

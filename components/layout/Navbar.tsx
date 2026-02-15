@@ -22,28 +22,29 @@ const navLinks = [
             { name: "Trainings", href: "/hr/trainings" },
         ],
     },
-    {
-        name: "Logistics",
-        href: "/logistics",
-        icon: Truck,
-        submenu: [
-            { name: "Request Service", href: "/logistics/request" },
-        ],
-    },
-    {
-        name: "Real Estate",
-        href: "/real-estate",
-        icon: Building2,
-        submenu: [
-            { name: "Property Listings", href: "/real-estate" },
-            { name: "List My Property", href: "/real-estate/list-property" },
-        ],
-    },
-    {
-        name: "Artisans",
-        href: "/artisans",
-        icon: Wrench,
-    },
+    // Temporarily hidden services
+    // {
+    //     name: "Logistics",
+    //     href: "/logistics",
+    //     icon: Truck,
+    //     submenu: [
+    //         { name: "Request Service", href: "/logistics/request" },
+    //     ],
+    // },
+    // {
+    //     name: "Real Estate",
+    //     href: "/real-estate",
+    //     icon: Building2,
+    //     submenu: [
+    //         { name: "Property Listings", href: "/real-estate" },
+    //         { name: "List My Property", href: "/real-estate/list-property" },
+    //     ],
+    // },
+    // {
+    //     name: "Artisans",
+    //     href: "/artisans",
+    //     icon: Wrench,
+    // },
     {
         name: "Shop",
         href: "/shop",

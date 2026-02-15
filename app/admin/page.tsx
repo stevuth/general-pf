@@ -27,8 +27,8 @@ export default function AdminDashboard() {
                     </div>
                 </Link>
 
-                {/* Logistics Card */}
-                <Link href="/admin/logistics" className="group bg-white dark:bg-surface-dark p-6 rounded-xl shadow-sm border border-gray-100 dark:border-white/10 hover:shadow-md transition-all duration-300 relative overflow-hidden">
+                {/* Temporarily hidden Logistics Card */}
+                {/* <Link href="/admin/logistics" className="group bg-white dark:bg-surface-dark p-6 rounded-xl shadow-sm border border-gray-100 dark:border-white/10 hover:shadow-md transition-all duration-300 relative overflow-hidden">
                     <div className="absolute top-0 right-0 w-24 h-24 bg-amber-50 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110" />
 
                     <div className="relative z-10">
@@ -42,10 +42,10 @@ export default function AdminDashboard() {
                             <ArrowRight className="w-4 h-4 ml-1" />
                         </div>
                     </div>
-                </Link>
+                </Link> */}
 
-                {/* Real Estate Card */}
-                <Link href="/admin/real-estate" className="group bg-white dark:bg-surface-dark p-6 rounded-xl shadow-sm border border-gray-100 dark:border-white/10 hover:shadow-md transition-all duration-300 relative overflow-hidden">
+                {/* Temporarily hidden Real Estate Card */}
+                {/* <Link href="/admin/real-estate" className="group bg-white dark:bg-surface-dark p-6 rounded-xl shadow-sm border border-gray-100 dark:border-white/10 hover:shadow-md transition-all duration-300 relative overflow-hidden">
                     <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-50 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110" />
 
                     <div className="relative z-10">
@@ -59,7 +59,7 @@ export default function AdminDashboard() {
                             <ArrowRight className="w-4 h-4 ml-1" />
                         </div>
                     </div>
-                </Link>
+                </Link> */}
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">

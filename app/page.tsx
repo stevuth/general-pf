@@ -20,7 +20,7 @@ export default function Home() {
       <ShopSlider />
       <LatestUpdates />
       <AdvertiseSection />
-      <SecondaryServices />
+      {/* <SecondaryServices /> */}
       <Footer />
     </main>
   );

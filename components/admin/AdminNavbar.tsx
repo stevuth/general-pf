@@ -10,17 +10,19 @@ import ConfirmationModal from '@/components/ui/ConfirmationModal';
 const submissionLinks = [
     { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
     { href: "/admin/hr", label: "HR Applications", icon: Users },
-    { href: "/admin/logistics", label: "Logistics Requests", icon: Truck },
-    { href: "/admin/real-estate", label: "Real Estate Requests", icon: Building2 },
+    // Temporarily hidden services
+    // { href: "/admin/logistics", label: "Logistics Requests", icon: Truck },
+    // { href: "/admin/real-estate", label: "Real Estate Requests", icon: Building2 },
     { href: "/admin/advertisements", label: "Advertisements", icon: Megaphone },
-    { href: "/admin/artisans", label: "Artisan Requests", icon: Wrench },
+    // { href: "/admin/artisans", label: "Artisan Requests", icon: Wrench },
     { href: "/admin/feedback", label: "Feedback", icon: MessageSquare },
     { href: "/admin/change-password", label: "Change Password", icon: Key },
 ];
 
 const managementLinks = [
     { href: "/admin/jobs", label: "Post Jobs", icon: Briefcase },
-    { href: "/admin/properties", label: "Post Properties", icon: Home },
+    // Temporarily hidden services
+    // { href: "/admin/properties", label: "Post Properties", icon: Home },
     { href: "/admin/trainings", label: "Post Trainings", icon: Users },
     { href: "/admin/shop", label: "Manage Shop", icon: ShoppingBag },
     { href: "/admin/announcements", label: "Announcements", icon: Megaphone },

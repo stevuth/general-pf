@@ -98,7 +98,8 @@ export default function LatestUpdates() {
                             <Briefcase className="w-4 h-4" />
                             Job Openings
                         </button>
-                        <button
+                        {/* Temporarily hidden Properties tab */}
+                        {/* <button
                             onClick={() => setActiveTab("properties")}
                             className={`px-6 py-3 rounded-full text-sm font-bold uppercase tracking-wide transition-all duration-300 flex items-center gap-2 ${activeTab === "properties"
                                 ? "bg-blue-600 text-white shadow-md"
@@ -107,7 +108,7 @@ export default function LatestUpdates() {
                         >
                             <Home className="w-4 h-4" />
                             Properties
-                        </button>
+                        </button> */}
                     </div>
                 </div>
 

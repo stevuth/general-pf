@@ -32,6 +32,9 @@ export default function ConfirmationModal({
 
     useEffect(() => {
         setMounted(true);
+    }, []);
+
+    useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = 'hidden';
         }

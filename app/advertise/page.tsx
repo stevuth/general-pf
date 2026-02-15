@@ -242,7 +242,8 @@ export default function AdvertisePage() {
                                                     HR Services (Post Job Openings)
                                                 </label>
                                             </div>
-                                            <div className="flex items-center space-x-3 p-3 border-2 border-gray-200 rounded-lg hover:border-blue-400 transition-colors">
+                                            {/* Temporarily hidden Real Estate option */}
+                                            {/* <div className="flex items-center space-x-3 p-3 border-2 border-gray-200 rounded-lg hover:border-blue-400 transition-colors">
                                                 <input
                                                     type="checkbox"
                                                     id="realEstate"
@@ -262,7 +263,7 @@ export default function AdvertisePage() {
                                                 <label htmlFor="realEstate" className="text-sm font-medium text-gray-700 cursor-pointer flex-1">
                                                     Real Estate (Post Properties)
                                                 </label>
-                                            </div>
+                                            </div> */}
                                         </div>
                                     </div>
 

@@ -29,7 +29,7 @@ export default function About() {
                                 General PF GLOBAL RESOURCES is a resourceful company dedicated to bridging gaps between parties and creating enabling routes to float businesses both locally and internationally.
                             </p>
                             <p className="text-gray-500 dark:text-gray-400 mb-8 leading-relaxed">
-                                We operate across three major sectors: HR Services, Logistics, and Real Estate, providing integrated solutions that empower businesses and individuals to achieve their goals.
+                                We specialize in HR Services, providing integrated solutions that empower businesses and individuals to achieve their goals through exceptional workforce management.
                             </p>
 
                             <Button className="bg-primary text-white hover:bg-primary/90 font-bold" asChild>
@@ -67,8 +67,8 @@ export default function About() {
                             >
                                 <div className="flex justify-between items-center gap-2 md:gap-0">
                                     <div className="flex-1 text-center">
-                                        <p className="text-xl md:text-3xl font-bold text-primary leading-tight">3+</p>
-                                        <p className="text-[10px] md:text-sm text-gray-500 mt-0.5">Major Sectors</p>
+                                        <p className="text-xl md:text-3xl font-bold text-primary leading-tight">500+</p>
+                                        <p className="text-[10px] md:text-sm text-gray-500 mt-0.5">Placements</p>
                                     </div>
                                     <div className="h-8 md:h-10 w-px bg-gray-200 dark:bg-white/10 flex-shrink-0" />
                                     <div className="flex-1 text-center">
